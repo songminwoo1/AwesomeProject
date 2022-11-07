@@ -1,0 +1,20 @@
+<Role>
+minwoo: scriber, JS: timer, Lin: facilitator
+
+Check Progress:
+Tomkat is not running on T2.micro
+-> Tomcat changed to Apache
+Server Recreated
+Front end: XMLHttpRequest working, board refresh functionality is now implemented.
+
+What We Decided & What will we do next:
+ *Writting SAD
+Lin: A,B - friday
+JS: C - sunday
+Minwoo: D - monday
+Chanyang: E - wendsday
+
+Validate Server operation.
+implement XHR responding interface on the backend.
+implement multi-page UI on the front end.
+We aproach other team to adjust the SRS together.

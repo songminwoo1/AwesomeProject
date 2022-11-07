@@ -1,0 +1,16 @@
+<Software Architecture Document>
+*verify before building
+*Provide construction plan
+
+Requirements -> Implementation
+사이에 Architecture Design, Detailed Design을 끼워 넣음.
+
+<설계 원칙>
+1. Architecture Driver: Architecture 를 크게 변화시키는 Requirements
+- 그 중에서 일부 선택, selected Architecture Driver
+
+* Architecture Frame Driver
+: Architecture Frame(Context)를 구성함.
+
+아키텍쳐의 구성 요소
+Component, Connectors
