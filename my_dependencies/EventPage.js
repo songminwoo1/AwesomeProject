@@ -8,21 +8,29 @@ class EventPage extends React.Component {
     }
 
     render() {
-        return (
-            <View style={pageStyles.container}>
-                <View style={pageStyles.center}>
-                    <Text style={pageStyles.title}>
-                        Title: {this.props.ev_title}
-                    </Text>
-                    <Text>
-                        Body: {this.props.ev_body + '\n'}
-                    </Text>
-                    <Text>
-                        Time: {this.props.ev_time}
-                    </Text>
+        if(this.props.page == "event-page") {
+            return (
+                <View style={pageStyles.container}>
+                    <View style={pageStyles.center}>
+                        <Text style={pageStyles.title}>
+                            Title: {this.props.ev_title}
+                        </Text>
+                        <Text>
+                            Body: {this.props.ev_body + '\n'}
+                        </Text>
+                        <Text>
+                            Time: {this.props.ev_time}
+                        </Text>
+                    </View>
                 </View>
-            </View>
-        );
+            );
+        }else{
+            return (
+                <View style={pageStyles.hidden}>
+
+                </View>
+            );
+        }
     }
 }
 
@@ -32,6 +40,9 @@ const pageStyles = StyleSheet.create({
         minWidth: Dimensions.get('window').width,
         minHeight: Dimensions.get('window').height,
         justifyContent: 'center',
+    },
+    hidden: {
+        display: 'none',
     },
     center: {
         backgroundColor: "#d0f0ff",
