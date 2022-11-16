@@ -76,7 +76,7 @@ class EventPage extends React.Component {
                         Posted on: {/*{this.props.postDT}*/} 2022/11/16 12:01:31
                     </Text>
                 </View>
-                <View style={{direction:'rtl'}}>
+                <View style={{justifyContent: 'flex-end'}}>
                     <TouchableOpacity>
                         <Image
                             style={{width:40, height:40}}
