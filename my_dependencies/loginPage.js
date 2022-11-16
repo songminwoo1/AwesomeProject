@@ -91,7 +91,7 @@ class UserPage extends React.Component {
         let request = new XMLHttpRequest();
         request.onload = () => {
             let responseObj = request.response;
-            //alert(responseObj); //print out response.
+            alert(responseObj); //print out response.
             let parsed_response = JSON.parse(responseObj);
             if (parsed_response.error_msg == 'Login: Ask to Register') {
                 this.onUserNotExist();
@@ -123,7 +123,7 @@ class UserPage extends React.Component {
         let request = new XMLHttpRequest();
         request.onload = () => {
             let responseObj = request.response;
-            //alert(responseObj); //print out response.
+            alert(responseObj); //print out response.
             let parsed_response = JSON.parse(responseObj);
             if(parsed_response.exit_code == 1) {
                 this.toVerify();
@@ -157,7 +157,7 @@ class UserPage extends React.Component {
         let request = new XMLHttpRequest();
         request.onload = () => {
             let responseObj = request.response;
-            //alert(responseObj); //print out response.
+            alert(responseObj); //print out response.
             let parsed_response = JSON.parse(responseObj);
             if(parsed_response.exit_code == 1) {
                 this.toLoginAgain();
