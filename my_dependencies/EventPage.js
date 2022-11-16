@@ -106,7 +106,7 @@ const pageStyles = StyleSheet.create({
     sec2: {
         flexDirection: 'row',
         alignItems: 'center',
-        direction: 'rtl'
+        justifyContent: 'flex-end'
 
     },
     postContent: {
