@@ -9,7 +9,7 @@ class AppMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: "user-page",
+            page: "event-page",
             title_text: "",
             body_text: "",
             posttime: "",

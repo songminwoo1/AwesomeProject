@@ -22,10 +22,11 @@ class EventPage extends React.Component {
                     </Text>
                 </View>
                 <View style={pageStyles.sec2}>
-                    <Button
-                        title="JOIN"
-                        color="green"
-                    />
+                    <TouchableOpacity>
+                        <Text style={pageStyles.button}>
+                        JOIN
+                        </Text>
+                    </TouchableOpacity>
                     <Image
                         style={{width:20, height:20}}
                         source={{
@@ -33,8 +34,7 @@ class EventPage extends React.Component {
                         }}
                     />
                     <Text>
-                        {/*{this.props.numMembers}*/}
-                        3
+                        {/*{this.props.numMembers}*/}3/6{/*{this.props.membersLimit}*/}
                     </Text>
                 </View>
                 <View>
@@ -76,7 +76,7 @@ class EventPage extends React.Component {
                         Posted on: {/*{this.props.postDT}*/} 2022/11/16 12:01:31
                     </Text>
                 </View>
-                <View style={{justifyContent: 'flex-end'}}>
+                <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
                     <TouchableOpacity>
                         <Image
                             style={{width:40, height:40}}
@@ -158,10 +158,11 @@ const pageStyles = StyleSheet.create({
     button: {
         borderWidth: 2,
         borderRadius: 10,
-        color: "#fffff",
+        color: "green",
         textAlign: 'center',
-        marginBottom: 0,
+        marginRight: 10,
         marginHorizontal: '0%',
+        padding: 10
     },
 });
 
