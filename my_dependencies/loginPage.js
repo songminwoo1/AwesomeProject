@@ -330,13 +330,13 @@ class UserPage extends React.Component {
                                 />
                             </View>
                             <Text style={pageStyles.signinmsg}>
-                                Email not exist. Or do you want to sign in?
+                                Email not exist. Or do you want to sign up?
                             </Text>
                             <TouchableOpacity onPress={this.tryLogin} >
                                 <Text style={pageStyles.button}>Login</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={this.toSignin} >
-                                <Text style={pageStyles.button}>Sign in</Text>
+                                <Text style={pageStyles.button}>Sign up</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -387,7 +387,7 @@ class UserPage extends React.Component {
                                 />
                             </View>
                             <TouchableOpacity onPress={this.trySignin} >
-                                <Text style={pageStyles.button}>Sign in</Text>
+                                <Text style={pageStyles.button}>Sign up</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={this.toLogin} >
                                 <Text style={pageStyles.button}>Return to Login</Text>
@@ -495,7 +495,7 @@ class UserPage extends React.Component {
                                 Please check your input again.
                             </Text>
                             <TouchableOpacity onPress={this.trySignin} >
-                                <Text style={pageStyles.button}>Sign in</Text>
+                                <Text style={pageStyles.button}>Sign up</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={this.toLogin} >
                                 <Text style={pageStyles.button}>Return to Login</Text>
