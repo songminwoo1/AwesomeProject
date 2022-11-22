@@ -400,6 +400,86 @@ class EventCreation extends React.Component {
                                     N28
                                 </Text>
                             </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W1")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W1
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W2")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W2
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W3")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W3
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W4-1")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W4-1
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W4-2")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W4-2
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W4-3")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W4-3
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W4-4")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W4-4
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W5-1")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W5-1
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W5-2")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W5-2
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W6")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W6
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W7")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W7
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W8")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W8
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W9")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W9
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W10")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W10
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W11")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W11
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress = {() => {this.pickPlace("W16")}}>
+                                <Text style={pageStyles.cat_button}>
+                                    W16
+                                </Text>
+                            </TouchableOpacity>
                             {/* W1 ~ 11, 2-1, x4 4-1, 4-2, 4-3, 4-4, x5 5-1, 5-2, 16 */}
                         </View>
                     </View>
@@ -452,7 +532,7 @@ const pageStyles = StyleSheet.create({
 
     },
     postContent: {
-        maxHeight: '90%',
+        maxHeight: '30%',
         flexDirection: 'row',
         borderWidth: 2,
         borderRadius: 10,
