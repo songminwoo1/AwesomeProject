@@ -7,7 +7,7 @@ class Topper extends React.Component {
         super(props);
     }
     _onPressAlarm = () => {
-        alert('You tapped the button!')
+        this.props.toEventCreation();
     };
     
     _onPressProfile = () => {

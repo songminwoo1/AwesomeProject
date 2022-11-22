@@ -157,7 +157,7 @@ class EventBoard extends React.Component {
             return (
                 <View style={boardStyles.container}>
                     <View style={boardStyles.over_topper}>{}</View>
-                    <Topper mainPageFunc = {this.props.mainPageFunc} userPageFunc = {this.props.userPageFunc}>{}</Topper>
+                    <Topper mainPageFunc = {this.props.mainPageFunc} userPageFunc = {this.props.userPageFunc} toEventCreation = {this.props.toEventCreation}>{}</Topper>
 
                     <View style={[boardStyles.board_body_scroller, this.state.page]}>
                         <View style={boardStyles.board_body}>
