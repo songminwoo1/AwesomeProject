@@ -12,14 +12,18 @@ class SearchPage extends React.Component {
 
     render() {
         if(this.props.page == "search-page") {
-            <View style={pageStyles.container}>
-                <Text>
-                    this is the search page
-                </Text>
-            </View>
+            return (
+                <View style={pageStyles.container}>
+                    <Text>
+                        this is the search page
+                    </Text>
+                </View>
+            )
         }else {
-            <View style={pageStyles.hidden}>
-            </View>
+            return (
+                <View style={pageStyles.hidden}>
+                </View>
+            )
         }
     }
 }

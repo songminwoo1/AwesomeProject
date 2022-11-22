@@ -35,7 +35,8 @@ class EventCreation extends React.Component {
             let parsed_response = JSON.parse(responseObj);
             if(parsed_response.exit_code == 0) {
                 //TODO: post fail
-                alert("event post failed");
+                // alert("event post failed");
+                alert(responseObj); //print out response.
             }else if(parsed_response.exit_code == 1) {
                 //TODO: post success
                 alert("event post success!");
@@ -70,18 +71,21 @@ class EventCreation extends React.Component {
         if(this.props.page == "event-creation") {
             return (
                 <View style={pageStyles.container}>
+                    <Text style={pageStyles.page_title}>
+                        [] Posting New Event
+                    </Text>
                     <View>
                         <Text style={pageStyles.title}>
                                POST TITLE
                         </Text>
                         <TextInput
-                                    editable={true}
-                                    maxLength={30}
-                                    style={pageStyles.input}
-                                    onChangeText={newText => this.onChangeTitle(newText)}
-                                    placeholder="type event title here"
-                                    keyboardType="default"
-                                />
+                            editable={true}
+                            maxLength={30}
+                            style={pageStyles.input}
+                            onChangeText={newText => this.onChangeTitle(newText)}
+                            placeholder="type event title here"
+                            keyboardType="default"
+                        />
                         <Text style={pageStyles.title}>
                             CATEGORY
                         </Text>
@@ -104,7 +108,7 @@ class EventCreation extends React.Component {
                             maxLength={500}
                             style={pageStyles.input_body}
                             onChangeText={newText => this.onChangeBody(newText)}
-                            placeholder={'GetCreative!'}
+                            placeholder={'Be Creative!'}
                             keyboardType="default"
                             textAlign='left'
                             multiline={true}
@@ -138,6 +142,12 @@ const pageStyles = StyleSheet.create({
     },
     hidden: {
         display: 'none',
+    },
+    page_title: {
+        fontSize: 25,
+        fontWeight: '300',
+        marginBottom: 15,
+        color: '#007'
     },
     sec1: {
         flexDirection: 'row',

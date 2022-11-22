@@ -6,7 +6,11 @@ class Topper extends React.Component {
     constructor(props) {
         super(props);
     }
-    _onPressAlarm = () => {
+    _onPressSearch = () => {
+        this.props.toSearch();
+    };
+
+    _onPressAdd = () => {
         this.props.toEventCreation();
     };
     
@@ -22,13 +26,18 @@ class Topper extends React.Component {
                 </View>
                 <View style={topperStyles.gap}/>
                 <View style={topperStyles.buttons}>
-                    <Text></Text>
+                    <TouchableOpacity onPress={this._onPressSearch}>
+                        <Image
+                            style={topperStyles.searchIcon}
+                            source={require("../resources/search.png")}
+                        />
+                    </TouchableOpacity>
                 </View>
                 <View style={topperStyles.buttons}>
-                    <TouchableOpacity onPress={this._onPressAlarm}>
+                    <TouchableOpacity onPress={this._onPressAdd}>
                         <Image
-                            style={topperStyles.bellIcon}
-                            source={require("../resources/bell.png")}
+                            style={topperStyles.addIcon}
+                            source={require("../resources/add.png")}
                         />
                     </TouchableOpacity>
                 </View>
@@ -66,9 +75,13 @@ const topperStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    bellIcon: {
-        width: 29,
-        height: 29,
+    searchIcon : {
+        width: 28,
+        height: 28,
+    },
+    addIcon: {
+        width: 31,
+        height: 31,
     },
     profileIcon: {
         width: 27,
