@@ -4,12 +4,13 @@ import EventBoard from './eventBoard';
 import UserPage from './loginPage';
 import EventPage from './EventPage';
 import SearchPage from './searchPage';
+import EventCreation from './eventCreation';
 
 class AppMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: "event-page",
+            page: "event-creation",
             title_text: "",
             body_text: "",
             posttime: "",
@@ -27,6 +28,9 @@ class AppMain extends React.Component {
     }
     MoveToEventPage = (props) => {
         this.setState({page: "event-page", title_text: props.title_text, body_text: props.body_text, posttime: props.posttime});
+    }
+    MoveToEventCreation = () => {
+        this.setState({page: "event-creation"});
     }
 
     //Back Handler
@@ -60,6 +64,7 @@ class AppMain extends React.Component {
                 <UserPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage} set_email_pw = {this.setEmailPassword}/>
                 <EventPage page = {this.state.page} ev_title={this.state.title_text} ev_body={this.state.body_text} ev_time={this.state.posttime}/>
                 <SearchPage page = {this.state.page}/>
+                <EventCreation page = {this.state.page}/>
             </View>
         );
     }
