@@ -14,7 +14,6 @@ class EventCreation extends React.Component {
     //category = ""; //taxi, food, purchase
     title = "";
     body = "";
-    //place = "";
     time = 0;
     num_mem = 0;
 
@@ -35,9 +34,98 @@ class EventCreation extends React.Component {
         //this.place = place;
     }
 
+    year = "";
+    month = "";
+    day = "";
+    hour = "";
+    minute = "";
+
+    onChangeYear = (text) => {
+        this.year = text;
+    }
+    onChangeMonth = (text) => {
+        this.month = text;
+    }
+    onChangeDay = (text) => {
+        this.day = text;
+    }
+    onChangeHour = (text) => {
+        this.hour = text;
+    }
+    onChangeMinute = (text) => {
+        this.minute = text;
+    }
     onSubmit = () => {
-        //TODO: submit event creation request to the back end.
+        if (this.year.length == 2) {
+            this.year = '20' + this.year;
+        }else if(this.year.length != 4) {
+            this.year = '1970';
+        }
         
+        if (this.month.length == 1) {
+            this.month = '0' + this.month;
+        }else if (this.month.length != 2) {
+            this.month = '00'
+        }
+        if (this.day.length == 1) {
+            this.day = '0' + this.day;
+        }else if (this.day.length != 2) {
+            this.day = '00'
+        }
+        if (this.hour.length == 1) {
+            this.hour = '0' + this.hour;
+        }else if (this.hour.length != 2) {
+            this.hour = '99'
+        }
+        if (this.minute.length == 1) {
+            this.minute = '0' + this.minute;
+        }else if (this.minute.length != 2) {
+            this.minute = '99'
+        }
+
+        var m = '';
+        switch(this.month){
+            case '1':
+                m = 'Jan';
+                break;
+            case '2':
+                m = 'Feb';
+                break;
+            case '3':
+                m = 'Mar';
+                break;
+            case '4':
+                m = 'Apr';
+                break;
+            case '5':
+                m = 'May';
+                break;
+            case '6':
+                m = 'Jun';
+                break;
+            case '7':
+                m = 'Jul';
+                break;
+            case '8':
+                m = 'Aug';
+                break;
+            case '9':
+                m = 'Sep';
+                break;
+            case '10':
+                m = 'Oct';
+                break;
+            case '11':
+                m = 'Nov';
+                break;
+            case '12':
+                m = 'Dec';
+                break;
+            default:
+                m = 'Non';
+                break;
+        }
+        this.event_time = Date.parse(`${this.day} ${m} ${this.year} ${this.hour}:${this.minute}:00 GMT`);
         this._PostEventXHR(this.props.email, this.props.password, this.state.category, this.title, this.body, this.state.place, this.event_time, this.num_mem);
     }
 
@@ -100,12 +188,73 @@ class EventCreation extends React.Component {
                             placeholder="type event title here"
                             keyboardType="default"
                         />
-                        <Text style={pageStyles.title}>
-                            DATE & TIME: <Text style={pageStyles.context}>
-                                {/*{this.props.eventDT}*/}
-                                2022/11/16 13:30:00
-                                </Text>
-                        </Text>
+                        <View style = {pageStyles.rowst}>
+                            <Text style={pageStyles.title}>
+                                {'DATE & TIME:  '}
+                            </Text>
+                            <TextInput
+                                editable={true}
+                                maxLength={4}
+                                style={pageStyles.dt}
+                                onChangeText={newText => this.onChangeYear(newText)}
+                                placeholder={'2022'}
+                                keyboardType="numeric"
+                                textAlign='left'
+                                multiline={true}
+                            />
+                            <Text style={pageStyles.dt}>
+                                /
+                            </Text>
+                            <TextInput
+                                editable={true}
+                                maxLength={2}
+                                style={pageStyles.dt}
+                                onChangeText={newText => this.onChangeMonth(newText)}
+                                placeholder={'11'}
+                                keyboardType="numeric"
+                                textAlign='left'
+                                multiline={true}
+                            />
+                            <Text style={pageStyles.dt}>
+                                /
+                            </Text>
+                            <TextInput
+                                editable={true}
+                                maxLength={2}
+                                style={pageStyles.dt}
+                                onChangeText={newText => this.onChangeDay(newText)}
+                                placeholder={'23'}
+                                keyboardType="numeric"
+                                textAlign='left'
+                                multiline={true}
+                            />
+                            <Text style={pageStyles.dt}>
+                                {" "}
+                            </Text>
+                            <TextInput
+                                editable={true}
+                                maxLength={2}
+                                style={pageStyles.dt}
+                                onChangeText={newText => this.onChangeHour(newText)}
+                                placeholder={'09'}
+                                keyboardType="numeric"
+                                textAlign='left'
+                                multiline={true}
+                            />
+                            <Text style={pageStyles.dt}>
+                                :
+                            </Text>
+                            <TextInput
+                                editable={true}
+                                maxLength={2}
+                                style={pageStyles.dt_right}
+                                onChangeText={newText => this.onChangeMinute(newText)}
+                                placeholder={'30'}
+                                keyboardType="numeric"
+                                textAlign='left'
+                                multiline={true}
+                            />
+                        </View>
                         <Text style={pageStyles.title}>
                                BODY
                         </Text>
@@ -508,6 +657,26 @@ const pageStyles = StyleSheet.create({
         maxHeight: Dimensions.get('window').height,
         justifyContent: 'center',
     },
+    rowst: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+    },
+    dt: {
+        textAlignVertical: 'top',
+        height: '100%',
+        color: 'black',
+        fontSize: 16,
+        textAlign: 'right',
+        fontWeight: '500',
+    },
+    dt_right: {
+        textAlignVertical: 'top',
+        height: '100%',
+        color: 'black',
+        fontSize: 16,
+        textAlign: 'left',
+        fontWeight: '500',
+    },
     common: {
         width: '100%',
     },
@@ -515,7 +684,7 @@ const pageStyles = StyleSheet.create({
         display: 'none',
     },
     page_title: {
-        paddingHorizontal: 60,
+        paddingLeft: 60,
         fontSize: 25,
         fontWeight: '300',
         marginBottom: 15,
@@ -551,7 +720,7 @@ const pageStyles = StyleSheet.create({
         //backgroundColor: "#d0f0ff",
     },
     title: {
-        paddingHorizontal: 60,
+        paddingLeft: 60,
         color: 'black',
         fontSize:16,
         textAlign: 'left',
