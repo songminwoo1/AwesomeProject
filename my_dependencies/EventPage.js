@@ -12,10 +12,135 @@ class EventPage extends React.Component {
 
     onJoin = () => {
         this.setState({ page: 'Joined' })
+        this._JoinXHR(this.props.email, this.props.password, this.props.eventID)
     }
 
     onLeave = () => {
         this.setState({ page: 'beforeJoin'})
+        this._LeaveXHR(this.props.email, this.props.password, this.props.eventID)
+    }
+
+    getEventInfo = (info) => { //for more information about info, refer to the comment in _getEventInfoXHR
+        this._getEventInfoXHR(this.props.email, this.props.password, this.props.eventID, this.props.commentStart, this.props.numComment, info)
+    }
+
+    _JoinXHR = (email, password, eventID) =>{
+        let request = new XMLHttpRequest();
+        request.onload = () => {
+            let responseObj = request.response;
+            //alert(responseObj); //print out response.
+            let parsed_response = JSON.parse(responseObj);
+            if(parsed_response.exit_code == 0) {
+                alert(responseObj); //print out response.
+            }else if(parsed_response.exit_code == 1) {
+                alert("Joined!");
+            }
+        
+        };
+        request.open('POST', 'http://13.115.154.88:5000/resource');
+        request.setRequestHeader("content-type", "application/json");
+        request.setRequestHeader("data-type", "json");
+        request.setRequestHeader("data", "my_test_data_section");
+        request.setRequestHeader("output", "json");
+        request.send(JSON.stringify({
+            'function-name': 'JoinEvent',
+            'argument': {
+                'email': email,
+                'event-id': eventID
+            },
+            'user-info': {
+                'email': email,
+                'password': password,
+            }
+        }
+        ));
+    }
+
+    _LeaveXHR = (email, password, eventID) =>{
+        let request = new XMLHttpRequest();
+        request.onload = () => {
+            let responseObj = request.response;
+            //alert(responseObj); //print out response.
+            let parsed_response = JSON.parse(responseObj);
+            if(parsed_response.exit_code == 0) {
+                alert(responseObj); //print out response.
+            }else if(parsed_response.exit_code == 1) {
+                alert("Left!");
+            }
+        
+        };
+        request.open('POST', 'http://13.115.154.88:5000/resource');
+        request.setRequestHeader("content-type", "application/json");
+        request.setRequestHeader("data-type", "json");
+        request.setRequestHeader("data", "my_test_data_section");
+        request.setRequestHeader("output", "json");
+        request.send(JSON.stringify({
+            'function-name': 'LeaveEvent',
+            'argument': {
+                'email': email,
+                'event-id': eventID
+            },
+            'user-info': {
+                'email': email,
+                'password': password,
+            }
+        }
+        ));
+    }
+
+    _getEventInfoXHR = (email, password, eventID, commentStart, numComment, info) => {
+        /*
+        If info == 'cur' => get current number of members
+        If info == 'num' => get the number of members set by the poster
+        If info == 'category' => get the category 
+        If info == 'place' => get the place 
+        If info == 'et' => get event time
+        If info == 'content' => get the body content of the event 
+        If info == 'pt' => get posting time 
+        If info == 'ue' => get poster's email
+        */
+        let request = new XMLHttpRequest();
+        request.onload = () => {
+            let responseObj = request.response;
+            //alert(responseObj); //print out response.
+            let parsed_response = JSON.parse(responseObj);
+            if(parsed_response.hasOwnPropery('data') && info == 'cur'){
+                return (parsed_response.data).cur_member
+            }else if (parsed_response.hasOwnPropery('data') && info == 'num'){
+                return (parsed_response.data).num_member
+            }else if (parsed_response.hasOwnPropery('data') && info == 'category'){
+                return (parsed_response.data).category
+            }else if (parsed_response.hasOwnPropery('data') && info == 'place'){
+                return (parsed_response.data).place
+            }else if (parsed_response.hasOwnPropery('data') && info == 'et'){
+                return (parsed_response.data).event_time
+            }else if (parsed_response.hasOwnPropery('data') && info == 'content'){
+                return (parsed_response.data).content
+            }else if (parsed_response.hasOwnPropery('data') && info == 'pt'){
+                return (parsed_response.data).posting_time
+            }else if (parsed_response.hasOwnPropery('data') && info == 'ue'){
+                return (parsed_response.data).uploader_email
+            }
+        
+        };
+        request.open('POST', 'http://13.115.154.88:5000/resource');
+        request.setRequestHeader("content-type", "application/json");
+        request.setRequestHeader("data-type", "json");
+        request.setRequestHeader("data", "my_test_data_section");
+        request.setRequestHeader("output", "json");
+        request.send(JSON.stringify({
+            'function-name': 'GetEventInfo',
+            'argument': {
+                'event-id': eventID,
+                'comment-start': commentStart,
+                'num-comment': numComment
+            },
+            'user-info': {
+                'email': email,
+                'password': password,
+            }
+        }
+        ));
     }
 
     render() {
@@ -48,7 +173,7 @@ class EventPage extends React.Component {
                                 }}
                             />
                             <Text style={{ marginLeft: 5 }}>
-                                {/*{this.props.numMembers}*/}3/6{/*{this.props.membersLimit}*/}
+                                {/*this.getEventInfo('cur')*/}3/6{/*{this.getEventInfo('num')}*/}
                             </Text>
                         </View>
                         <View>
@@ -60,26 +185,26 @@ class EventPage extends React.Component {
                             </Text>
                             <Text style={pageStyles.title}>
                                 CATEGORY: <Text style={pageStyles.context}>
-                                    {/*{this.props.category}*/}
+                                    {/*{this.getEventInfo('category')}*/}
                                     Food delivery
                                 </Text>
                             </Text>
                             <Text style={pageStyles.title}>
                                 PLACE: <Text style={pageStyles.context}>
-                                    {/*{this.props.place}*/}
+                                    {/*{this.getEventInfo('place')}*/}
                                     N1
                                 </Text>
                             </Text>
                             <Text style={pageStyles.title}>
                                 DATE & TIME: <Text style={pageStyles.context}>
-                                    {/*{this.props.eventDT}*/}
+                                    {/*{this.getEventInfo('et')}*/}
                                     2022/11/16 13:30:00
                                 </Text>
                             </Text>
                         </View>
                         <View style={pageStyles.postContent}>
                             <Text style={pageStyles.postText}>
-                                {/*{this.props.postContent}*/}
+                                {/*{this.getEventInfo('content')}*/}
                                 The pizza shop in KAIST is offering 10% discount!!
                                 {'\n'}
                                 Does anyone wanna get pizza tgt?
@@ -87,7 +212,7 @@ class EventPage extends React.Component {
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                             <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                Posted on: {/*{this.props.postDT}*/} 2022/11/16 12:01:31
+                                Posted on: {/*{this.getEventInfo('pt')}*/} 2022/11/16 12:01:31
                             </Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -113,7 +238,7 @@ class EventPage extends React.Component {
                                 }}
                             />
                             <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                {/*{this.props.email}*/}
+                                {/*{this.getEventInfo('ue')}*/}
                                 zhilin@kaist.ac.kr
                             </Text>
                         </View>
@@ -130,7 +255,7 @@ class EventPage extends React.Component {
                                 }}
                             />
                             <Text style={{ marginLeft: 5 }}>
-                                {/*{this.props.numMembers}*/}3/6{/*{this.props.membersLimit}*/}
+                                {/*this.getEventInfo('cur')*/}4/6{/*{this.getEventInfo('num')}*/}
                             </Text>
                         </View>
                         <View>
@@ -142,26 +267,26 @@ class EventPage extends React.Component {
                             </Text>
                             <Text style={pageStyles.title}>
                                 CATEGORY: <Text style={pageStyles.context}>
-                                    {/*{this.props.category}*/}
+                                    {/*{this.getEventInfo('category')}*/}
                                     Food delivery
                                 </Text>
                             </Text>
                             <Text style={pageStyles.title}>
                                 PLACE: <Text style={pageStyles.context}>
-                                    {/*{this.props.place}*/}
+                                    {/*{this.getEventInfo('place')}*/}
                                     N1
                                 </Text>
                             </Text>
                             <Text style={pageStyles.title}>
                                 DATE & TIME: <Text style={pageStyles.context}>
-                                    {/*{this.props.eventDT}*/}
+                                    {/*{this.getEventInfo('et')}*/}
                                     2022/11/16 13:30:00
                                 </Text>
                             </Text>
                         </View>
                         <View style={pageStyles.postContent}>
                             <Text style={pageStyles.postText}>
-                                {/*{this.props.postContent}*/}
+                                {/*{this.getEventInfo('content')}*/}
                                 The pizza shop in KAIST is offering 10% discount!!
                                 {'\n'}
                                 Does anyone wanna get pizza tgt?
@@ -169,7 +294,7 @@ class EventPage extends React.Component {
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                             <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                Posted on: {/*{this.props.postDT}*/} 2022/11/16 12:01:31
+                                Posted on: {/*{this.getEventInfo('pt')}*/} 2022/11/16 12:01:31
                             </Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
