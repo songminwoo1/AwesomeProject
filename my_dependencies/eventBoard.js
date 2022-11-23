@@ -19,26 +19,34 @@ class EventBoard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            itemTableA:  [["Taxi", "5:30 today?", "22 min ago"],
-            ["Food", "6:30 today?", "24 min ago"],
-            ["Taxi", "7:30 today?", "26 min ago"],
-            ["Food", "8:30 today?", "28 min ago"],
-            ["Food", "6:30 today?", "24 min ago"],
-            ["Taxi", "7:30 today?", "26 min ago"],
-            ["Food", "8:30 today?", "28 min ago"],
-            ["Food", "6:30 today?", "24 min ago"],
-            ["Taxi", "7:30 today?", "26 min ago"],
-            ["Food", "8:30 today?", "28 min ago"],
-            ["Taxi", "9:30 today?", "30 min ago"]],
+            itemTableA:  [
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1]],
 
-            itemTableB:  [["BBBBBBBBB", "5:30 today?", "22 min ago"],
-            ["Food", "6:30 today?", "24 min ago"],
-            ["Food", "8:30 today?", "28 min ago"],
-            ["Taxi", "9:30 today?", "30 min ago"]],
+            itemTableB:  [
+            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2],
+            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2],
+            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2],
+            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2],
+            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2]],
 
-            itemTableC:  [["CCCCCCCCC", "5:30 today?", "22 min ago"],
-            ["Food", "6:30 today?", "24 min ago"],
-            ["Taxi", "9:30 today?", "30 min ago"]],
+            itemTableC:  [
+            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
+            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
+            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
+            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
+            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
+            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1]],
 
             page: boardStyles.bbsb,
 
@@ -47,11 +55,21 @@ class EventBoard extends React.Component {
             bottomC: bottomButtonText.c,
         }
     }
-    _BoardRefresh = () => {
+    _BoardRefresh = (cat) => {
         let request = new XMLHttpRequest();
         request.onload = function() {
             let responseObj = request.response;
-            alert(responseObj); //print out response.
+            if (responseObj.exit_code == 0) {
+                if (cat == 'taxi') {
+                    this.setState({itemTableA: responseObj.data});
+                }else if (cat == 'food') {
+                    this.setState({itemTableB: responseObj.data});
+                }else if (cat == 'purchase') {
+                    this.setState({itemTableC: responseObj.data});
+                }
+            }else {
+                alert(responseObj); //print out response.
+            }
         };
         
         request.open('POST', 'http://13.115.154.88:5000/resource');
@@ -60,13 +78,20 @@ class EventBoard extends React.Component {
         request.setRequestHeader("data", "my_test_data_section");
         request.setRequestHeader("output", "json");
         request.send(JSON.stringify({
-            'function-name': 'LoadBoardA',
-            'argument': '',
-            'user-info': {
-                'email': '4011hjs@kaist.ac.kr',
-                'password': 'monkey33'
+            'function-name': 'GetBoardList',
+            'argument': {
+                'search-word': '',
+                'category': cat,
+                'place': '##ALL##',
+                'period-start': 0,
+                'period-end': 0,
+                'event-start': 0,
+                'num-event': 20
             },
-            'A': 10,
+            'user-info': {
+                'email': this.props.email,
+                'password': this.props.password
+            }
         }));
     }
     _GetTableXHR = () => {
@@ -142,13 +167,15 @@ class EventBoard extends React.Component {
     }
 
     GotoPageA = () => {
-        this._BoardRefresh();
+        this._BoardRefresh('taxi');
         this.setState({page: boardStyles.bbsa, bottomA: bottomButtonText.ah, bottomB: bottomButtonText.b, bottomC: bottomButtonText.c});
     }
     GotoPageB = () => {
+        this._BoardRefresh('food');
         this.setState({page: boardStyles.bbsb, bottomA: bottomButtonText.a, bottomB: bottomButtonText.bh, bottomC: bottomButtonText.c});
     }
     GotoPageC = () => {
+        this._BoardRefresh('purchase');
         this.setState({page: boardStyles.bbsc, bottomA: bottomButtonText.a, bottomB: bottomButtonText.b, bottomC: bottomButtonText.ch});
     }
 
