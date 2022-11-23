@@ -55,6 +55,9 @@ class EventCreation extends React.Component {
     onChangeMinute = (text) => {
         this.minute = text;
     }
+    onChangePeople = (text) => {
+        this.num_mem = text * 1;
+    }
     onSubmit = () => {
         if (this.year.length == 2) {
             this.year = '20' + this.year;
@@ -125,7 +128,7 @@ class EventCreation extends React.Component {
                 m = 'Non';
                 break;
         }
-        this.event_time = Date.parse(`${this.day} ${m} ${this.year} ${this.hour}:${this.minute}:00 GMT`);
+        this.event_time = Date.parse(`${this.day} ${m} ${this.year} ${this.hour}:${this.minute}:00 GMT`) / 1000;
         this._PostEventXHR(this.props.email, this.props.password, this.state.category, this.title, this.body, this.state.place, this.event_time, this.num_mem);
     }
 
@@ -250,6 +253,21 @@ class EventCreation extends React.Component {
                                 style={pageStyles.dt_right}
                                 onChangeText={newText => this.onChangeMinute(newText)}
                                 placeholder={'30'}
+                                keyboardType="numeric"
+                                textAlign='left'
+                                multiline={true}
+                            />
+                        </View>
+                        <View style = {pageStyles.rowst}>
+                            <Text style={pageStyles.title}>
+                                    MAX PEOPLE:
+                            </Text>
+                            <TextInput
+                                editable={true}
+                                maxLength={4}
+                                style={pageStyles.dt}
+                                onChangeText={newText => this.onChangePeople(newText)}
+                                placeholder={'00'}
                                 keyboardType="numeric"
                                 textAlign='left'
                                 multiline={true}
@@ -701,7 +719,7 @@ const pageStyles = StyleSheet.create({
 
     },
     postContent: {
-        maxHeight: '30%',
+        maxHeight: '20%',
         flexDirection: 'row',
         borderWidth: 2,
         borderRadius: 10,
