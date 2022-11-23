@@ -1,14 +1,16 @@
 import React from 'react';
-import { StyleSheet, Button, Text, View, TouchableOpacity, TextInput, Image } from 'react-native';
+import { StyleSheet, Button, Text, View, TouchableOpacity, TextInput, Image, SafeAreaView, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
 
 class EventPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: 'beforeJoin' //'Joined', 'beforeJoin'
+            page: 'beforeJoin' //'Joined', 'beforeJoin', 'Comment'
         }
     }
+
+    prevPage = 'beforeJoin'
 
     onJoin = () => {
         this.setState({ page: 'Joined' })
@@ -20,8 +22,16 @@ class EventPage extends React.Component {
         this._LeaveXHR(this.props.email, this.props.password, this.props.eventID)
     }
 
+    onComment = () => {
+        this.setState({ page: 'Comment'})
+    }
+
+    onBack = () => { //to get out of the Comment page 
+        this.setState({ page: this.prevPage})
+    }
+
     getEventInfo = (info) => { //for more information about info, refer to the comment in _getEventInfoXHR
-        this._getEventInfoXHR(this.props.email, this.props.password, this.props.eventID, this.props.commentStart, this.props.numComment, info)
+        this._getEventInfoXHR(this.props.email, this.props.password, this.props.eventID, info)
     }
 
     _JoinXHR = (email, password, eventID) =>{
@@ -88,7 +98,7 @@ class EventPage extends React.Component {
         ));
     }
 
-    _getEventInfoXHR = (email, password, eventID, commentStart, numComment, info) => {
+    _getEventInfoXHR = (email, password, eventID, info) => {
         /*
         If info == 'cur' => get current number of members
         If info == 'num' => get the number of members set by the poster
@@ -131,9 +141,7 @@ class EventPage extends React.Component {
         request.send(JSON.stringify({
             'function-name': 'GetEventInfo',
             'argument': {
-                'event-id': eventID,
-                'comment-start': commentStart,
-                'num-comment': numComment
+                'event-id': eventID
             },
             'user-info': {
                 'email': email,
@@ -216,7 +224,7 @@ class EventPage extends React.Component {
                             </Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress = {this.onComment}>
                                 <Image
                                     style={{ width: 40, height: 40 }}
                                     source={{
@@ -228,6 +236,7 @@ class EventPage extends React.Component {
                     </View>
                 );
             }else if (this.state.page == 'Joined'){
+                this.prevPage = 'Joined'
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.sec1}>
@@ -297,8 +306,8 @@ class EventPage extends React.Component {
                                 Posted on: {/*{this.getEventInfo('pt')}*/} 2022/11/16 12:01:31
                             </Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                            <TouchableOpacity>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end'}}>
+                            <TouchableOpacity onPress = {this.onComment}>
                                 <Image
                                     style={{ width: 40, height: 40 }}
                                     source={{
@@ -323,6 +332,12 @@ const pageStyles = StyleSheet.create({
         minWidth: Dimensions.get('window').width,
         minHeight: Dimensions.get('window').height,
         justifyContent: 'center',
+        padding: 60,
+    },
+    container2: {
+        flexDirection: 'column',
+        minWidth: Dimensions.get('window').width,
+        minHeight: Dimensions.get('window').height,
         padding: 60,
     },
     hidden: {

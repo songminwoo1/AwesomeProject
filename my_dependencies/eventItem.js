@@ -7,7 +7,7 @@ class RenderItem extends React.Component {
     }
 
     onPressAction = () => {
-        this.props.eventPageFunc({title_text:this.props.title, body_text:this.props.body, posttime:this.props.posttime});
+        this.props.eventPageFunc({title_text:this.props.title, body_text:this.props.body, posttime:this.props.posttime, event_id:this.props.event_id});
     }
 
     render() {

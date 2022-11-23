@@ -16,7 +16,7 @@ class BoardItems extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.scroller}>
-                    {this.props.itemTable.map((e) => <RenderItem title={e[0]} body={e[1]} posttime={e[2]} 
+                    {this.props.itemTable.map((e) => <RenderItem title={e[3]} body={e[4]} eventtime={e[6]} event_id={e[0]} 
                     eventPageFunc = {this.props.eventPageFunc}/>)}
                 </ScrollView>
             </View>

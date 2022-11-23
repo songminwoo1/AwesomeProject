@@ -10,10 +10,11 @@ class AppMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: "event-creation",
+            page: "event-page",
             title_text: "",
             body_text: "",
             posttime: "",
+            event_id: 0,
 
             email: "",
             password: "",
@@ -27,7 +28,7 @@ class AppMain extends React.Component {
         this.setState({page: "event-board"});
     }
     MoveToEventPage = (props) => {
-        this.setState({page: "event-page", title_text: props.title_text, body_text: props.body_text, posttime: props.posttime});
+        this.setState({page: "event-page", title_text: props.title_text, body_text: props.body_text, eventtime: props.eventtime, event_id: props.event_id});
     }
     MoveToEventCreation = () => {
         this.setState({page: "event-creation"});
