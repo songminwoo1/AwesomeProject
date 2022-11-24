@@ -145,6 +145,7 @@ class EventCreation extends React.Component {
             }else if(parsed_response.exit_code == 1) {
                 //TODO: post success
                 alert("event post success!");
+                this.props.mainPageFunc();
             }
         };
         

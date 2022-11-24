@@ -67,7 +67,7 @@ class AppMain extends React.Component {
                 <UserPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage} set_email_pw = {this.setEmailPassword}/>
                 <EventPage page = {this.state.page} ev_title={this.state.title_text} ev_body={this.state.body_text} ev_time={this.state.posttime}/>
                 <SearchPage page = {this.state.page}/>
-                <EventCreation page = {this.state.page} email = {this.state.email} password = {this.state.password}/>
+                <EventCreation page = {this.state.page} mainPageFunc = {this.MoveToMainPage} email = {this.state.email} password = {this.state.password}/>
             </View>
         );
     }

@@ -55,17 +55,31 @@ class EventBoard extends React.Component {
             bottomC: bottomButtonText.c,
         }
     }
+
+    setA = (data) => {
+        this.setState({itemTableA: data});
+    }
+
+    setB = (data) => {
+        this.setState({itemTableB: data});
+    }
+
+    setC = (data) => {
+        this.setState({itemTableC: data});
+    }
+
     _BoardRefresh = (cat) => {
         let request = new XMLHttpRequest();
-        request.onload = function() {
+        request.onload = () => {
             let responseObj = request.response;
-            if (responseObj.exit_code == 0) {
+            let parsed_response = JSON.parse(responseObj);
+            if (parsed_response.exit_code == 1) {
                 if (cat == 'taxi') {
-                    this.setState({itemTableA: responseObj.data});
+                    this.setA(parsed_response.data);
                 }else if (cat == 'food') {
-                    this.setState({itemTableB: responseObj.data});
+                    this.setB(parsed_response.data);
                 }else if (cat == 'purchase') {
-                    this.setState({itemTableC: responseObj.data});
+                    this.setC(parsed_response.data);
                 }
             }else {
                 alert(responseObj); //print out response.
