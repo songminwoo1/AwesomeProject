@@ -6,6 +6,11 @@ import Topper from './topper';
 import SubTopper from './sub_topper';
 import BoardItems from './boardItems';
 
+
+//messy section - implementing board initial refresh
+var isRefreshed = false;
+//messy section end.
+
 const bottomButtonText = {
     a: "_",
     ah: "ㅡ",
@@ -195,6 +200,12 @@ class EventBoard extends React.Component {
 
     render() {
         if(this.props.page == "event-board") {
+            if (!isRefreshed) {
+                this._BoardRefresh('taxi');
+                this._BoardRefresh('food');
+                this._BoardRefresh('purchase');
+                isRefreshed = true;
+            }
             return (
                 <View style={boardStyles.container}>
                     <View style={boardStyles.over_topper}>{}</View>
