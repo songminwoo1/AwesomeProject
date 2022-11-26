@@ -6,11 +6,22 @@ class EventPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: 'beforeJoin', //'Joined', 'beforeJoin', 'Comment'
+            page: 'beforeJoin', // 'Joined', 'beforeJoin', 'Comment'
             ownerPage: 'Open' // 'Closed'
         }
     }
-    checkPoster = true;
+    checkPoster = this.onCheckPoster();
+    username = this.getEventInfo('un');
+    title = this.getEventInfo('title');
+    cur = this.getEventInfo('cur'); // current number of member
+    num = this.getEventInfo('num'); // number of members set by event poster
+    category =  this.getEventInfo('category');
+    place = this.getEventInfo('place');
+    et = this.getEventInfo('et'); //event time
+    content = this.getEventInfo('content');
+    pt = this.getEventInfo('pt'); // posting time 
+    ue = this.getEventInfo('ue'); // poster's email
+
     onJoin = () => {
         this.setState({ page: 'Joined' })
         this._JoinXHR(this.props.email, this.props.password, this.props.event_id)
@@ -30,12 +41,12 @@ class EventPage extends React.Component {
     }
 
     onClose = () => {
-        this.setState({ page: 'Closed'})
+        this.setState({ page: 'Closed' })
         this._CloseXHR(this.props.email, this.props.password, this.props.event_id)
     }
 
     onDisable = () => {
-        this.setState({ page: 'Disabled'})
+        this.setState({ page: 'Disabled' })
         this._DisableXHR(this.props.email, this.props.password, this.props.event_id)
         this.props.mainPageFunc()
     }
@@ -43,9 +54,9 @@ class EventPage extends React.Component {
     onCheckPoster = () => {
         let parsed_response = this._CheckPosterXHR(this.props.email, this.props.password, this.props.event_id)
         if (parsed_response == 'T') {
-            this.checkPoster = true
+            return true
         } else {
-            this.checkPoster = false
+            return false
         }
     }
 
@@ -71,7 +82,7 @@ class EventPage extends React.Component {
         request.send(JSON.stringify({
             'function-name': 'CheckPoster',
             'argument': {
-                'event-id' : event_id,
+                'event-id': event_id,
                 'email': email
             },
             'user-info': {
@@ -275,7 +286,6 @@ class EventPage extends React.Component {
 
     render() {
         if (this.props.page == "event-page") {
-            {this.onCheckPoster()}
             if (this.checkPoster) {
                 if (this.state.ownerPage == 'Open') {
                     return (
@@ -298,14 +308,14 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ fontSize: 18, marginLeft: 20 }}>
-]                                    {this.getEventInfo('un')}
+                                    {this.username}
                                     {/*zzlinnn*/}
                                 </Text>
                             </View>
                             <View style={pageStyles.sec2}>
                                 <TouchableOpacity onPress={this.onClose}>
                                     <Text style={pageStyles.button2}>
-                                        CLOSE 
+                                        CLOSE
                                     </Text>
                                 </TouchableOpacity>
                                 <Image
@@ -315,39 +325,39 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ marginLeft: 5 }}>
-                                    {this.getEventInfo('cur')}/{this.getEventInfo('num')}
+                                    {this.cur}/{this.num}
                                     {/*3/6*/}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('title')}
+                                        {this.title}
                                         {/*Pizza at 5?*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     CATEGORY: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('category')}
+                                        {this.category}
                                         {/*Food delivery*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     PLACE: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('place')}
+                                        {this.place}
                                         {/*N1*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('et')}
+                                        {this.et}
                                         {/*2022/11/16 13:30:00*/}
                                     </Text>
                                 </Text>
                             </View>
                             <View style={pageStyles.postContent}>
                                 <Text style={pageStyles.postText}>
-                                    {this.getEventInfo('content')}
+                                    {this.content}
                                     {/*The pizza shop in KAIST is offering 10% discount!!
                             {'\n'}
                             Does anyone wanna get pizza tgt?*/}
@@ -355,7 +365,7 @@ class EventPage extends React.Component {
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.getEventInfo('pt')} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {this.pt} {/*2022/11/16 12:01:31*/}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -370,7 +380,7 @@ class EventPage extends React.Component {
                             </View>
                         </View>
                     );
-                }else if (this.state.ownerPage == 'Closed'){
+                } else if (this.state.ownerPage == 'Closed') {
                     return (
                         <View style={pageStyles.container}>
                             <View style={{ justifyContent: 'flex-start', marginBottom: 20 }}>
@@ -391,7 +401,7 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                    {this.getEventInfo('un')}
+                                    {this.username}
                                     {/*zzlinnn*/}
                                 </Text>
                             </View>
@@ -408,39 +418,39 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ marginLeft: 5 }}>
-                                    {this.getEventInfo('cur')}/{this.getEventInfo('num')}
+                                    {this.cur}/{this.num}
                                     {/*3/6*/}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('title')}
+                                        {this.title}
                                         {/*Pizza at 5?*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     CATEGORY: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('category')}
+                                        {this.category}
                                         {/*Food delivery*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     PLACE: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('place')}
+                                        {this.place}
                                         {/*N1*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('et')}
+                                        {this.et}
                                         {/*2022/11/16 13:30:00*/}
                                     </Text>
                                 </Text>
                             </View>
                             <View style={pageStyles.postContent}>
                                 <Text style={pageStyles.postText}>
-                                    {this.getEventInfo('content')}
+                                    {this.content}
                                     {/*The pizza shop in KAIST is offering 10% discount!!
                             {'\n'}
                             Does anyone wanna get pizza tgt?*/}
@@ -448,7 +458,7 @@ class EventPage extends React.Component {
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.getEventInfo('pt')} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {this.pt} {/*2022/11/16 12:01:31*/}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -486,7 +496,7 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                    {this.getEventInfo('un')}
+                                    {this.username}
                                     {/*zzlinnn*/}
                                 </Text>
                             </View>
@@ -503,39 +513,39 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ marginLeft: 5 }}>
-                                    {this.getEventInfo('cur')}/{this.getEventInfo('num')}
+                                    {this.cur}/{this.num}
                                     {/*3/6*/}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('title')}
+                                        {this.title}
                                         {/*Pizza at 5?*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     CATEGORY: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('category')}
+                                        {this.category}
                                         {/*Food delivery*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     PLACE: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('place')}
+                                        {this.place}
                                         {/*N1*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('et')}
+                                        {this.et}
                                         {/*2022/11/16 13:30:00*/}
                                     </Text>
                                 </Text>
                             </View>
                             <View style={pageStyles.postContent}>
                                 <Text style={pageStyles.postText}>
-                                    {this.getEventInfo('content')}
+                                    {this.content}
                                     {/*The pizza shop in KAIST is offering 10% discount!!
                                 {'\n'}
                                 Does anyone wanna get pizza tgt?*/}
@@ -543,7 +553,7 @@ class EventPage extends React.Component {
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.getEventInfo('pt')} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {this.pt} {/*2022/11/16 12:01:31*/}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -579,7 +589,7 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                    {this.getEventInfo('ue')}
+                                    {this.username}
                                     {/*zhilin@kaist.ac.kr*/}
                                 </Text>
                             </View>
@@ -596,39 +606,39 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ marginLeft: 5 }}>
-                                    {this.getEventInfo('cur')}/{this.getEventInfo('num')}
+                                    {this.cur}/{this.num}
                                     {/*4/6*/}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
-                                        {this.props.postTitle}
+                                        {this.title}
                                         {/*Pizza at 5?*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     CATEGORY: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('category')}
+                                        {this.category}
                                         {/*Food delivery*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     PLACE: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('place')}
+                                        {this.place}
                                         {/*N1*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.getEventInfo('et')}
+                                        {this.et}
                                         {/*2022/11/16 13:30:00*/}
                                     </Text>
                                 </Text>
                             </View>
                             <View style={pageStyles.postContent}>
                                 <Text style={pageStyles.postText}>
-                                    {this.getEventInfo('content')}
+                                    {this.content}
                                     {/*The pizza shop in KAIST is offering 10% discount!!
                                 {'\n'}
                                 Does anyone wanna get pizza tgt?*/}
