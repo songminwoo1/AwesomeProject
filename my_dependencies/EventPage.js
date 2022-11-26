@@ -260,7 +260,7 @@ class EventPage extends React.Component {
                 this.prevPage = 'Joined'
                 return (
                     <View style={pageStyles.container}>
-                        <View style={{ justifyContent: 'flex-start' }}>
+                        <View style={{ justifyContent: 'flex-start', marginBottom: 20 }}>
                             <TouchableOpacity onPress={this.onBack}>
                                 <Image
                                     style={{ width: 40, height: 40 }}
