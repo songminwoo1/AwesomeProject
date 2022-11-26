@@ -10,7 +10,7 @@ class AppMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: "event-board",
+            page: "event-page",
             title_text: "",
             body_text: "",
             posttime: "",
@@ -65,7 +65,7 @@ class AppMain extends React.Component {
             <View style={this.state.page}>
                 <EventBoard page = {this.state.page} mainPageFunc = {this.MoveToMainPage} userPageFunc = {this.MoveToUserPage} eventPageFunc = {this.MoveToEventPage} toSearch = {this.MoveToSearchPage} toEventCreation = {this.MoveToEventCreation} email = {this.state.email} password = {this.state.password}/>
                 <UserPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage} set_email_pw = {this.setEmailPassword}/>
-                <EventPage page = {this.state.page} ev_title={this.state.title_text} ev_body={this.state.body_text} ev_time={this.state.posttime}/>
+                <EventPage page = {this.state.page} ev_title={this.state.title_text} ev_body={this.state.body_text} ev_time={this.state.posttime} email = {this.state.email} password = {this.state.password} ev_id={this.state.event_id} mainPageFunc = {this.MoveToMainPage}/>
                 <SearchPage page = {this.state.page}/>
                 <EventCreation page = {this.state.page} mainPageFunc = {this.MoveToMainPage} email = {this.state.email} password = {this.state.password}/>
             </View>
