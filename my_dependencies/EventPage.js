@@ -10,18 +10,7 @@ class EventPage extends React.Component {
             ownerPage: 'Open' // 'Closed'
         }
     }
-    checkPoster = this.onCheckPoster();
-    username = this.getEventInfo('un');
-    title = this.getEventInfo('title');
-    cur = this.getEventInfo('cur'); // current number of member
-    num = this.getEventInfo('num'); // number of members set by event poster
-    category =  this.getEventInfo('category');
-    place = this.getEventInfo('place');
-    et = this.getEventInfo('et'); //event time
-    content = this.getEventInfo('content');
-    pt = this.getEventInfo('pt'); // posting time 
-    ue = this.getEventInfo('ue'); // poster's email
-
+    
     onJoin = () => {
         this.setState({ page: 'Joined' })
         this._JoinXHR(this.props.email, this.props.password, this.props.event_id)
@@ -283,6 +272,17 @@ class EventPage extends React.Component {
         }
         ));
     }
+    checkPoster = this.onCheckPoster();
+    username = this.getEventInfo('un');
+    title = this.getEventInfo('title');
+    cur = this.getEventInfo('cur'); // current number of member
+    num = this.getEventInfo('num'); // number of members set by event poster
+    category =  this.getEventInfo('category');
+    place = this.getEventInfo('place');
+    et = this.getEventInfo('et'); //event time
+    content = this.getEventInfo('content');
+    pt = this.getEventInfo('pt'); // posting time 
+    ue = this.getEventInfo('ue'); // poster's email
 
     render() {
         if (this.props.page == "event-page") {
