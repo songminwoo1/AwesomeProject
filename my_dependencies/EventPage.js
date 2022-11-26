@@ -10,7 +10,6 @@ class EventPage extends React.Component {
             ownerPage: 'Open' // 'Closed'
         }
     }
-
     checkPoster = true;
     onJoin = () => {
         this.setState({ page: 'Joined' })
@@ -299,8 +298,7 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                    {this.props.event_id}
-                                    {this.getEventInfo('un')}
+]                                    {this.getEventInfo('un')}
                                     {/*zzlinnn*/}
                                 </Text>
                             </View>
