@@ -189,7 +189,7 @@ class UserPage extends React.Component {
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
                             <Text style={pageStyles.title}>
-                                KaiShare User
+                                KAIShare User
                             </Text>
                             <View style={pageStyles.inputArea}>
                                 <Text style={pageStyles.input}>{this.email}</Text>
@@ -202,7 +202,7 @@ class UserPage extends React.Component {
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
                             <Text style={pageStyles.title}>
-                                KaiShare Login
+                                KAIShare Login
                             </Text>
                             <View style={pageStyles.inputArea}>
                                 <TextInput
@@ -235,7 +235,7 @@ class UserPage extends React.Component {
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
                             <Text style={pageStyles.title}>
-                                KaiShare Login
+                                KAIShare Login
                             </Text>
                             <Text style={pageStyles.signinmsg}>
                                 Email Verification Success! now please login.
@@ -271,7 +271,7 @@ class UserPage extends React.Component {
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
                             <Text style={pageStyles.title}>
-                                KaiShare Login
+                                KAIShare Login
                             </Text>
                             <View style={pageStyles.inputArea}>
                                 <TextInput
@@ -294,7 +294,7 @@ class UserPage extends React.Component {
                                 />
                             </View>
                             <Text style={pageStyles.signinmsg}>
-                                Wrong email/password (not kaist email?)
+                                Wrong email/password (not 'st email?)
                             </Text>
                             <TouchableOpacity onPress={this.tryLogin} >
                                 <Text style={pageStyles.button}>Login</Text>
@@ -307,7 +307,7 @@ class UserPage extends React.Component {
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
                             <Text style={pageStyles.title}>
-                                KaiShare Login
+                                KAIShare Login
                             </Text>
                             <View style={pageStyles.inputArea}>
                                 <TextInput
@@ -346,7 +346,7 @@ class UserPage extends React.Component {
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
                             <Text style={pageStyles.title}>
-                                KaiShare Login
+                                KAIShare Login
                             </Text>
                             <View style={pageStyles.inputArea}>
                                 <TextInput
@@ -400,7 +400,7 @@ class UserPage extends React.Component {
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
                             <Text style={pageStyles.title}>
-                                KaiShare Login
+                                KAIShare Login
                             </Text>
                             <View style={pageStyles.inputArea}>
                                 <TextInput
@@ -451,7 +451,7 @@ class UserPage extends React.Component {
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
                             <Text style={pageStyles.title}>
-                                KaiShare Login
+                                KAIShare Login
                             </Text>
                             <View style={pageStyles.inputArea}>
                                 <TextInput
