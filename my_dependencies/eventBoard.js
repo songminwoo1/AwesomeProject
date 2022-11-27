@@ -25,7 +25,7 @@ class EventBoard extends React.Component {
         super(props);
         this.state = {
             itemTableA:  [
-            [42, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
             [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
             [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
             [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],

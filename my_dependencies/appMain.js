@@ -10,7 +10,7 @@ class AppMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: "event-board",
+            page: "search-page",
             
             event_id: 0,
             event_data: {},
