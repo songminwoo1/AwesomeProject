@@ -13,12 +13,12 @@ class EventPage extends React.Component {
     
     onJoin = () => {
         this.setState({ page: 'Joined' })
-        this._JoinXHR(this.props.email, this.props.password, this.props.event_id)
+        this._JoinXHR(this.props.email, this.props.password, this.props.event_data.event_id)
     }
 
     onLeave = () => {
         this.setState({ page: 'beforeJoin' })
-        this._LeaveXHR(this.props.email, this.props.password, this.props.event_id)
+        this._LeaveXHR(this.props.email, this.props.password, this.props.event_data.event_id)
     }
 
     onComment = () => {
@@ -31,55 +31,13 @@ class EventPage extends React.Component {
 
     onClose = () => {
         this.setState({ page: 'Closed' })
-        this._CloseXHR(this.props.email, this.props.password, this.props.event_id)
+        this._CloseXHR(this.props.email, this.props.password, this.props.event_data.event_id)
     }
 
     onDisable = () => {
         this.setState({ page: 'Disabled' })
-        this._DisableXHR(this.props.email, this.props.password, this.props.event_id)
+        this._DisableXHR(this.props.email, this.props.password, this.props.event_data.event_id)
         this.props.mainPageFunc()
-    }
-
-    onCheckPoster = () => {
-        let parsed_response = this._CheckPosterXHR(this.props.email, this.props.password, this.props.event_id)
-        if (parsed_response == 'T') {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    getEventInfo = (info) => { //for more information about info, refer to the comment in _getEventInfoXHR
-        this._GetEventInfoXHR(this.props.email, this.props.password, this.props.event_id, info)
-    }
-
-    _CheckPosterXHR = (email, password, event_id) => {
-        let request = new XMLHttpRequest();
-        request.onload = () => {
-            let parsed_response = JSON.parse(responseObj);
-            if (parsed_response.exit_code == 0) {
-                alert(responseObj);
-            } else if (parsed_response.exit_code == 1) {
-                return parsed_response.data
-            }
-        };
-        request.open('POST', 'http://13.115.154.88:5000/resource');
-        request.setRequestHeader("content-type", "application/json");
-        request.setRequestHeader("data-type", "json");
-        request.setRequestHeader("data", "my_test_data_section");
-        request.setRequestHeader("output", "json");
-        request.send(JSON.stringify({
-            'function-name': 'CheckPoster',
-            'argument': {
-                'event-id': event_id,
-                'email': email
-            },
-            'user-info': {
-                'email': email,
-                'password': password,
-            }
-        }
-        ));
     }
 
     _JoinXHR = (email, password, event_id) => {
@@ -210,83 +168,10 @@ class EventPage extends React.Component {
         ));
     }
 
-    _GetEventInfoXHR = (email, password, event_id, info) => {
-        /*
-        If info == 'cur' => get current number of members
-        If info == 'num' => get the number of members set by the poster
-        If info == 'category' => get the category 
-        If info == 'place' => get the place 
-        If info == 'et' => get event time
-        If info == 'content' => get the body content of the event 
-        If info == 'pt' => get posting time 
-        If info == 'ue' => get poster's email
-        If info == 'un' => get poster's username
-        If info == 'title' => get title of event 
-        */
-        let request = new XMLHttpRequest();
-        request.onload = () => {
-            let responseObj = request.response;
-            //alert(responseObj); //print out response.
-            let parsed_response = JSON.parse(responseObj);
-            if (parsed_response.exit_code == 1) {
-                if (parsed_response.hasOwnProperty('data') && info == 'cur') {
-                    return (parsed_response.data).cur_member
-                } else if (parsed_response.hasOwnProperty('data') && info == 'num') {
-                    return (parsed_response.data).num_member
-                } else if (parsed_response.hasOwnProperty('data') && info == 'category') {
-                    return (parsed_response.data).category
-                } else if (parsed_response.hasOwnProperty('data') && info == 'place') {
-                    return (parsed_response.data).place
-                } else if (parsed_response.hasOwnProperty('data') && info == 'et') {
-                    return (parsed_response.data).event_time
-                } else if (parsed_response.hasOwnProperty('data') && info == 'content') {
-                    return (parsed_response.data).content
-                } else if (parsed_response.hasOwnProperty('data') && info == 'pt') {
-                    return (parsed_response.data).posting_time
-                } else if (parsed_response.hasOwnProperty('data') && info == 'ue') {
-                    return (parsed_response.data).uploader_email
-                } else if (parsed_response.hasOwnProperty('data') && info == 'un') {
-                    return (parsed_response.data).username
-                } else if (parsed_response.hasOwnProperty('data') && info == 'title') {
-                    return (parsed_response.data).title
-                }
-
-            } else {
-                alert(responseObj); //print out response.
-            }
-        };
-        request.open('POST', 'http://13.115.154.88:5000/resource');
-        request.setRequestHeader("content-type", "application/json");
-        request.setRequestHeader("data-type", "json");
-        request.setRequestHeader("data", "my_test_data_section");
-        request.setRequestHeader("output", "json");
-        request.send(JSON.stringify({
-            'function-name': 'GetEventInfo',
-            'argument': {
-                'event-id': event_id
-            },
-            'user-info': {
-                'email': email,
-                'password': password,
-            }
-        }
-        ));
-    }
-    checkPoster = this.onCheckPoster();
-    username = this.getEventInfo('un');
-    title = this.getEventInfo('title');
-    cur = this.getEventInfo('cur'); // current number of member
-    num = this.getEventInfo('num'); // number of members set by event poster
-    category =  this.getEventInfo('category');
-    place = this.getEventInfo('place');
-    et = this.getEventInfo('et'); //event time
-    content = this.getEventInfo('content');
-    pt = this.getEventInfo('pt'); // posting time 
-    ue = this.getEventInfo('ue'); // poster's email
-
     render() {
         if (this.props.page == "event-page") {
-            if (this.checkPoster) {
+            alert(this.props.event_data.event_id);
+            if (this.event_data.email == this.props.email) {
                 if (this.state.ownerPage == 'Open') {
                     return (
                         <View style={pageStyles.container}>
@@ -308,7 +193,7 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                    {this.username}
+                                    {this.event_data.username}
                                     {/*zzlinnn*/}
                                 </Text>
                             </View>
@@ -325,14 +210,14 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ marginLeft: 5 }}>
-                                    {this.cur}/{this.num}
+                                    {this.event_data.cur_member}/{this.event_data.num_member}
                                     {/*3/6*/}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
-                                        {this.title}
+                                        {this.event_data.title}
                                         {/*Pizza at 5?*/}
                                     </Text>
                                 </Text>

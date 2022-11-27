@@ -25,7 +25,7 @@ class EventBoard extends React.Component {
         super(props);
         this.state = {
             itemTableA:  [
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
+            [42, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
             [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
             [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
             [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
@@ -62,15 +62,15 @@ class EventBoard extends React.Component {
     }
 
     setA = (data) => {
-        this.setState({itemTableA: data});
+        //this.setState({itemTableA: data});
     }
 
     setB = (data) => {
-        this.setState({itemTableB: data});
+        //this.setState({itemTableB: data});
     }
 
     setC = (data) => {
-        this.setState({itemTableC: data});
+        //this.setState({itemTableC: data});
     }
 
     _BoardRefresh = (cat) => {

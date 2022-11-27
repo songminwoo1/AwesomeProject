@@ -10,11 +10,10 @@ class AppMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: "user-page",
-            title_text: "",
-            body_text: "",
-            posttime: "",
+            page: "event-board",
+            
             event_id: 0,
+            event_data: {},
 
             email: "",
             password: "",
@@ -26,8 +25,37 @@ class AppMain extends React.Component {
     MoveToMainPage = () => {
         this.setState({page: "event-board"});
     }
+    _GetEventInfoXHR = (event_id) => {
+        let request = new XMLHttpRequest();
+        request.onload = () => {
+            let responseObj = request.response;
+            //alert(responseObj); //print out response.
+            let parsed_response = JSON.parse(responseObj);
+            if (parsed_response.exit_code == 1) {
+                this.setState({page: "event-page", event_data: parsed_response.data + {event_id: event_id}});
+            } else {
+                alert(responseObj); //print out response.
+            }
+        };
+        request.open('POST', 'http://13.115.154.88:5000/resource');
+        request.setRequestHeader("content-type", "application/json");
+        request.setRequestHeader("data-type", "json");
+        request.setRequestHeader("data", "my_test_data_section");
+        request.setRequestHeader("output", "json");
+        request.send(JSON.stringify({
+            'function-name': 'GetEventInfo',
+            'argument': {
+                'event-id': event_id
+            },
+            'user-info': {
+                'email': this.state.email,
+                'password': this.state.password,
+            }
+        }
+        ));
+    }
     MoveToEventPage = (props) => {
-        this.setState({page: "event-page", title_text: props.title_text, body_text: props.body_text, eventtime: props.eventtime, event_id: props.event_id});
+        this._GetEventInfoXHR(props.event_id);
     }
     MoveToEventCreation = () => {
         this.setState({page: "event-creation"});
@@ -65,7 +93,7 @@ class AppMain extends React.Component {
             <View style={this.state.page}>
                 <EventBoard page = {this.state.page} mainPageFunc = {this.MoveToMainPage} userPageFunc = {this.MoveToUserPage} eventPageFunc = {this.MoveToEventPage} toSearch = {this.MoveToSearchPage} toEventCreation = {this.MoveToEventCreation} email = {this.state.email} password = {this.state.password}/>
                 <UserPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage} set_email_pw = {this.setEmailPassword}/>
-                <EventPage page = {this.state.page} ev_title={this.state.title_text} ev_body={this.state.body_text} ev_time={this.state.posttime} email = {this.state.email} password = {this.state.password} event_id={this.state.event_id} mainPageFunc = {this.MoveToMainPage}/>
+                <EventPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} event_data = {this.state.event_data}/>
                 <SearchPage page = {this.state.page}/>
                 <EventCreation page = {this.state.page} mainPageFunc = {this.MoveToMainPage} email = {this.state.email} password = {this.state.password}/>
             </View>
