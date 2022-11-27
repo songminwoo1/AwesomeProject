@@ -11,7 +11,7 @@ class AppMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: "user-page",
+            page: "search-page",
             
             event_data: {},
 
@@ -140,7 +140,7 @@ class AppMain extends React.Component {
                 <UserPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage} set_email_pw = {this.setEmailPassword}/>
                 <EventPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} event_data = {this.state.event_data} refreshFunc = {this.MoveToEventPage} commentFunc = {this.MoveToCommentPage}/>
                 <CommentPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} comment_data = {this.state.comment_data} eventPageFunc = { () => {this.MoveToEventPage({event_id: this.state.event_data.event_id})} }/>
-                <SearchPage page = {this.state.page}/>
+                <SearchPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage}/>
                 <EventCreation page = {this.state.page} mainPageFunc = {this.MoveToMainPage} email = {this.state.email} password = {this.state.password}/>
             </View>
         );
