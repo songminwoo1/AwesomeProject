@@ -31,8 +31,29 @@ class AppMain extends React.Component {
             let responseObj = request.response;
             //alert(responseObj); //print out response.
             let parsed_response = JSON.parse(responseObj);
-            if (parsed_response.exit_code == 1) {
-                this.setState({page: "event-page", event_data: parsed_response.data + {event_id: event_id}});
+
+            //for temporary test
+            parsed_response = {
+                exit_code: 0,
+                data: {
+                    'email': 'testemail@kaist.ac.kr',
+                    'username': 'thatUser',
+                    'category': 'taxi',
+                    'title': 'wanna taxi ride',
+                    'content': 'from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US from kaist to dajeon stn. ONE OF US ',
+                    'place': 'N3',
+                    'event_time': 1669599999,
+                    'posting_time': 1669533927,
+                    'status': 0,
+                    'num_member': 4,
+                    'cur_member': 2,
+                    'members': [['alsdnthd1234@kaist.ac.kr', 'minwoo'], ['anotherppl@kaist.ac.kr', 'thatGuy']],
+                }
+            }
+            //
+            if (parsed_response.exit_code == 0) {
+                parsed_response.data.event_id = event_id;
+                this.setState({page: "event-page", event_data: parsed_response.data});
             } else {
                 alert(responseObj); //print out response.
             }

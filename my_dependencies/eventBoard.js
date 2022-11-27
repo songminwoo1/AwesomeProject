@@ -205,6 +205,7 @@ class EventBoard extends React.Component {
                 this._BoardRefresh('food');
                 this._BoardRefresh('purchase');
                 isRefreshed = true;
+                alert("initial refreshed");
             }
             return (
                 <View style={boardStyles.container}>

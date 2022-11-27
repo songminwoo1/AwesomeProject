@@ -6,8 +6,26 @@ class EventPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: 'beforeJoin', // 'Joined', 'beforeJoin', 'Comment'
+            //isJoined: false, // true/false
+            page: 'event', // 'event', 'Comment'
             ownerPage: 'Open' // 'Closed'
+        }
+    }
+
+    checkJoined = () => {
+        for (var i = 0; i < this.props.event_data.members.length; i++) {
+            //alert(this.props.event_data.members[i][0]);
+            if (this.props.event_data.members[i][0] == this.props.email) {
+                return true;
+            }
+        }
+        return false;
+    }
+    checkOwner = () => {
+        if (this.props.event_data.email == this.props.email) {
+            return true;
+        }else {
+            return false;
         }
     }
     
@@ -170,8 +188,8 @@ class EventPage extends React.Component {
 
     render() {
         if (this.props.page == "event-page") {
-            alert(this.props.event_data.event_id);
-            if (this.event_data.email == this.props.email) {
+            this.checkJoinAndOwner();
+            if (this.props.event_data.email == this.props.email) {
                 if (this.state.ownerPage == 'Open') {
                     return (
                         <View style={pageStyles.container}>
@@ -193,7 +211,7 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                    {this.event_data.username}
+                                    {this.props.event_data.username}
                                     {/*zzlinnn*/}
                                 </Text>
                             </View>
@@ -210,14 +228,14 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ marginLeft: 5 }}>
-                                    {this.event_data.cur_member}/{this.event_data.num_member}
+                                    {this.props.event_data.cur_member}/{this.props.event_data.num_member}
                                     {/*3/6*/}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
-                                        {this.event_data.title}
+                                        {this.props.event_data.title}
                                         {/*Pizza at 5?*/}
                                     </Text>
                                 </Text>
@@ -359,8 +377,8 @@ class EventPage extends React.Component {
                         </View>
                     );
                 }
-            } else {
-                if (this.state.page == 'beforeJoin') {
+            } else { //this user is not the owner of this event.
+                if (!this.state.isJoined) {
                     return (
                         <View style={pageStyles.container}>
                             <View style={{ justifyContent: 'flex-start', marginBottom: 20 }}>
@@ -380,9 +398,8 @@ class EventPage extends React.Component {
                                         uri: 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'
                                     }}
                                 />
-                                <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                    {this.username}
-                                    {/*zzlinnn*/}
+                                <Text style={{ fontSize: 24, marginLeft: 10 }}>
+                                    {this.props.event_data.username}
                                 </Text>
                             </View>
                             <View style={pageStyles.sec2}>
@@ -398,47 +415,40 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ marginLeft: 5 }}>
-                                    {this.cur}/{this.num}
-                                    {/*3/6*/}
+                                    {this.props.event_data.cur_member}/{this.props.event_data.num_member}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
-                                        {this.title}
-                                        {/*Pizza at 5?*/}
+                                        {this.props.event_data.title}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     CATEGORY: <Text style={pageStyles.context}>
-                                        {this.category}
-                                        {/*Food delivery*/}
+                                        {this.props.event_data.category}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     PLACE: <Text style={pageStyles.context}>
-                                        {this.place}
+                                        {this.props.event_data.place}
                                         {/*N1*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.et}
-                                        {/*2022/11/16 13:30:00*/}
+                                        {this.props.event_data.event_time}
                                     </Text>
                                 </Text>
                             </View>
                             <View style={pageStyles.postContent}>
                                 <Text style={pageStyles.postText}>
-                                    {this.content}
-                                    {/*The pizza shop in KAIST is offering 10% discount!!
-                                {'\n'}
-                                Does anyone wanna get pizza tgt?*/}
+                                    {this.props.event_data.content}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.pt} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {this.props.event_data.posting_time} {/*2022/11/16 12:01:31*/}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -453,7 +463,7 @@ class EventPage extends React.Component {
                             </View>
                         </View>
                     );
-                } else if (this.state.page == 'Joined') {
+                } else if (this.state.isJoined) {
                     return (
                         <View style={pageStyles.container}>
                             <View style={{ justifyContent: 'flex-start', marginBottom: 20 }}>
