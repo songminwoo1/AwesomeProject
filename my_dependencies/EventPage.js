@@ -6,9 +6,7 @@ class EventPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //isJoined: false, // true/false
             page: 'event', // 'event', 'Comment'
-            ownerPage: 'Open' // 'Closed'
         }
     }
 
@@ -21,21 +19,14 @@ class EventPage extends React.Component {
         }
         return false;
     }
-    checkOwner = () => {
-        if (this.props.event_data.email == this.props.email) {
-            return true;
-        }else {
-            return false;
-        }
-    }
     
     onJoin = () => {
-        this.setState({ page: 'Joined' })
+        //this.setState({ page: 'Joined' })
         this._JoinXHR(this.props.email, this.props.password, this.props.event_data.event_id)
     }
 
     onLeave = () => {
-        this.setState({ page: 'beforeJoin' })
+        //this.setState({ page: 'beforeJoin' })
         this._LeaveXHR(this.props.email, this.props.password, this.props.event_data.event_id)
     }
 
@@ -64,10 +55,10 @@ class EventPage extends React.Component {
             let responseObj = request.response;
             //alert(responseObj); //print out response.
             let parsed_response = JSON.parse(responseObj);
-            if (parsed_response.exit_code == 0) {
+            if (parsed_response.exit_code == 10) {
                 alert(responseObj); //print out response.
-            } else if (parsed_response.exit_code == 1) {
-                alert("Joined!");
+            } else if (parsed_response.exit_code == 0) {
+                this.props.refreshFunc(event_id);
             }
 
         };
@@ -188,9 +179,9 @@ class EventPage extends React.Component {
 
     render() {
         if (this.props.page == "event-page") {
-            this.checkJoinAndOwner();
+            alert("refreshed");
             if (this.props.event_data.email == this.props.email) {
-                if (this.state.ownerPage == 'Open') {
+                if (this.props.event_data.status == 1) {
                     return (
                         <View style={pageStyles.container}>
                             <View style={{ justifyContent: 'flex-start', marginBottom: 20 }}>
@@ -210,9 +201,8 @@ class EventPage extends React.Component {
                                         uri: 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'
                                     }}
                                 />
-                                <Text style={{ fontSize: 18, marginLeft: 20 }}>
+                                <Text style={{ fontSize: 24, marginLeft: 10 }}>
                                     {this.props.event_data.username}
-                                    {/*zzlinnn*/}
                                 </Text>
                             </View>
                             <View style={pageStyles.sec2}>
@@ -229,46 +219,39 @@ class EventPage extends React.Component {
                                 />
                                 <Text style={{ marginLeft: 5 }}>
                                     {this.props.event_data.cur_member}/{this.props.event_data.num_member}
-                                    {/*3/6*/}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
                                         {this.props.event_data.title}
-                                        {/*Pizza at 5?*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     CATEGORY: <Text style={pageStyles.context}>
-                                        {this.category}
-                                        {/*Food delivery*/}
+                                        {this.props.event_data.category}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     PLACE: <Text style={pageStyles.context}>
-                                        {this.place}
+                                        {this.props.event_data.place}
                                         {/*N1*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.et}
-                                        {/*2022/11/16 13:30:00*/}
+                                        {this.props.event_data.event_time}
                                     </Text>
                                 </Text>
                             </View>
                             <View style={pageStyles.postContent}>
                                 <Text style={pageStyles.postText}>
-                                    {this.content}
-                                    {/*The pizza shop in KAIST is offering 10% discount!!
-                            {'\n'}
-                            Does anyone wanna get pizza tgt?*/}
+                                    {this.props.event_data.content}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.pt} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {this.props.event_data.posting_time} {/*2022/11/16 12:01:31*/}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -283,7 +266,7 @@ class EventPage extends React.Component {
                             </View>
                         </View>
                     );
-                } else if (this.state.ownerPage == 'Closed') {
+                } else if (this.props.event_data.status == 0) {
                     return (
                         <View style={pageStyles.container}>
                             <View style={{ justifyContent: 'flex-start', marginBottom: 20 }}>
@@ -303,9 +286,8 @@ class EventPage extends React.Component {
                                         uri: 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'
                                     }}
                                 />
-                                <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                    {this.username}
-                                    {/*zzlinnn*/}
+                                <Text style={{ fontSize: 24, marginLeft: 10 }}>
+                                    {this.props.event_data.username}
                                 </Text>
                             </View>
                             <View style={pageStyles.sec2}>
@@ -321,47 +303,40 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ marginLeft: 5 }}>
-                                    {this.cur}/{this.num}
-                                    {/*3/6*/}
+                                    {this.props.event_data.cur_member}/{this.props.event_data.num_member}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
-                                        {this.title}
-                                        {/*Pizza at 5?*/}
+                                        {this.props.event_data.title}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     CATEGORY: <Text style={pageStyles.context}>
-                                        {this.category}
-                                        {/*Food delivery*/}
+                                        {this.props.event_data.category}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     PLACE: <Text style={pageStyles.context}>
-                                        {this.place}
+                                        {this.props.event_data.place}
                                         {/*N1*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.et}
-                                        {/*2022/11/16 13:30:00*/}
+                                        {this.props.event_data.event_time}
                                     </Text>
                                 </Text>
                             </View>
                             <View style={pageStyles.postContent}>
                                 <Text style={pageStyles.postText}>
-                                    {this.content}
-                                    {/*The pizza shop in KAIST is offering 10% discount!!
-                            {'\n'}
-                            Does anyone wanna get pizza tgt?*/}
+                                    {this.props.event_data.content}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.pt} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {this.props.event_data.posting_time} {/*2022/11/16 12:01:31*/}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -378,7 +353,7 @@ class EventPage extends React.Component {
                     );
                 }
             } else { //this user is not the owner of this event.
-                if (!this.state.isJoined) {
+                if (!this.checkJoined()) { //not joined
                     return (
                         <View style={pageStyles.container}>
                             <View style={{ justifyContent: 'flex-start', marginBottom: 20 }}>
@@ -463,7 +438,7 @@ class EventPage extends React.Component {
                             </View>
                         </View>
                     );
-                } else if (this.state.isJoined) {
+                } else {
                     return (
                         <View style={pageStyles.container}>
                             <View style={{ justifyContent: 'flex-start', marginBottom: 20 }}>
@@ -483,9 +458,8 @@ class EventPage extends React.Component {
                                         uri: 'https://cdn-icons-png.flaticon.com/512/1946/1946429.png'
                                     }}
                                 />
-                                <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                                    {this.username}
-                                    {/*zhilin@kaist.ac.kr*/}
+                                <Text style={{ fontSize: 24, marginLeft: 10 }}>
+                                    {this.props.event_data.username}
                                 </Text>
                             </View>
                             <View style={pageStyles.sec2}>
@@ -501,47 +475,40 @@ class EventPage extends React.Component {
                                     }}
                                 />
                                 <Text style={{ marginLeft: 5 }}>
-                                    {this.cur}/{this.num}
-                                    {/*4/6*/}
+                                    {this.props.event_data.cur_member}/{this.props.event_data.num_member}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={pageStyles.title}>
                                     POST TITLE: <Text style={pageStyles.context}>
-                                        {this.title}
-                                        {/*Pizza at 5?*/}
+                                        {this.props.event_data.title}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     CATEGORY: <Text style={pageStyles.context}>
-                                        {this.category}
-                                        {/*Food delivery*/}
+                                        {this.props.event_data.category}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     PLACE: <Text style={pageStyles.context}>
-                                        {this.place}
+                                        {this.props.event_data.place}
                                         {/*N1*/}
                                     </Text>
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.et}
-                                        {/*2022/11/16 13:30:00*/}
+                                        {this.props.event_data.event_time}
                                     </Text>
                                 </Text>
                             </View>
                             <View style={pageStyles.postContent}>
                                 <Text style={pageStyles.postText}>
-                                    {this.content}
-                                    {/*The pizza shop in KAIST is offering 10% discount!!
-                                {'\n'}
-                                Does anyone wanna get pizza tgt?*/}
+                                    {this.props.event_data.content}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.getEventInfo('pt')} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {this.props.event_data.posting_time} {/*2022/11/16 12:01:31*/}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>

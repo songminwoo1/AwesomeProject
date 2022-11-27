@@ -62,15 +62,15 @@ class EventBoard extends React.Component {
     }
 
     setA = (data) => {
-        //this.setState({itemTableA: data});
+        this.setState({itemTableA: data});
     }
 
     setB = (data) => {
-        //this.setState({itemTableB: data});
+        this.setState({itemTableB: data});
     }
 
     setC = (data) => {
-        //this.setState({itemTableC: data});
+        this.setState({itemTableC: data});
     }
 
     _BoardRefresh = (cat) => {
@@ -201,11 +201,8 @@ class EventBoard extends React.Component {
     render() {
         if(this.props.page == "event-board") {
             if (!isRefreshed) {
-                this._BoardRefresh('taxi');
-                this._BoardRefresh('food');
-                this._BoardRefresh('purchase');
                 isRefreshed = true;
-                alert("initial refreshed");
+                this._BoardRefresh('food');
             }
             return (
                 <View style={boardStyles.container}>
