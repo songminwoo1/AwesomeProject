@@ -31,7 +31,8 @@ class EventPage extends React.Component {
     }
 
     onComment = () => {
-        this.setState({ page: 'Comment' })
+        //this.setState({ page: 'Comment' })
+        this.props.commentFunc({event_id: this.props.event_data.event_id});
     }
 
     onBack = () => { //to get out of the Comment page 
@@ -179,7 +180,6 @@ class EventPage extends React.Component {
 
     render() {
         if (this.props.page == "event-page") {
-            alert("refreshed");
             if (this.props.event_data.email == this.props.email) {
                 if (this.props.event_data.status == 1) {
                     return (
