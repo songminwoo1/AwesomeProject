@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Button, Text, View, TouchableOpacity, TextInput, Image, SafeAreaView, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
+import Comment from './comment';
 
 class CommentPage extends React.Component {
     constructor(props) {
@@ -28,10 +29,7 @@ class CommentPage extends React.Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <Text>
-                        {this.props.comment_data}
-                        comment page
-                    </Text>
+                    {this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={() => {}}/>)}
                 </View>
             );
         }else{

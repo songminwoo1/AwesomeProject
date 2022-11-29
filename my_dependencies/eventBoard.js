@@ -24,34 +24,11 @@ class EventBoard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            itemTableA:  [
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1],
-            [0, 'email@kaist.ac.kr', 'taxi', 'Join Ride', 'wanna join?', 'N1', 0, 2, 1]],
+            itemTableA:  [],
 
-            itemTableB:  [
-            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2],
-            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2],
-            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2],
-            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2],
-            [0, 'email@kaist.ac.kr', 'food', 'Eat.', 'wanna eat?', 'E6', 0, 4, 2]],
+            itemTableB:  [],
 
-            itemTableC:  [
-            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
-            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
-            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
-            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
-            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1],
-            [0, 'email@kaist.ac.kr', 'purchase', 'Buy it', 'take it', 'W3', 0, 5, 1]],
+            itemTableC:  [],
 
             page: boardStyles.bbsb,
 
@@ -203,6 +180,8 @@ class EventBoard extends React.Component {
             if (!isRefreshed) {
                 isRefreshed = true;
                 this._BoardRefresh('food');
+                this._BoardRefresh('taxi');
+                this._BoardRefresh('purchase');
             }
             return (
                 <View style={boardStyles.container}>
