@@ -14,7 +14,13 @@ class CommentPage extends React.Component {
     onBack = () => { //to get out of the Comment page 
         this.props.eventPageFunc()
     }
-
+    comment_text = "";
+    onCommentWrite = (text) => {
+        this.comment_text = text;
+    }
+    PostComment = () => {
+        this.props.commentFunc(this.comment_text);
+    }
     render() {
         if (this.props.page == "comment-page") {
             return (
@@ -29,6 +35,21 @@ class CommentPage extends React.Component {
                             />
                         </TouchableOpacity>
                     </View>
+                    <TextInput
+                        editable={true}
+                        maxLength={120}
+                        style={pageStyles.input_body}
+                        onChangeText={newText => this.onCommentWrite(newText)}
+                        placeholder={'you comment here'}
+                        keyboardType="default"
+                        textAlign='left'
+                        multiline={true}
+                    />
+                    <TouchableOpacity onPress={this.PostComment}>
+                        <Text>
+                            Submit Button -- design plz
+                        </Text>
+                    </TouchableOpacity>
                     {this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={() => {}}/>)}
                 </View>
             );
@@ -51,6 +72,18 @@ const pageStyles = StyleSheet.create({
     },
     hidden: {
         display: 'none',
+    },
+    input_body: {
+        width: '100%',
+        maxWidth: '100%',
+        minHeight: 100,
+        fontSize: 20,
+        textAlign: 'left',
+        paddingHorizontal: 10,
+
+        flexShrink: 1,
+        flexWrap: 'wrap',
+        
     },
 });
 

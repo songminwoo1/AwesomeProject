@@ -10,7 +10,7 @@ class Comment extends React.Component {
     
     //props.data: [1, 'commentmailA@kaist.ac.kr', 'commenterA', 'this is A comment.', 42]
     //props.eraseFunc: suppose that by calling eraseFunc() when the writer of this comment presses button, the comment gets erased and page is refreshed.
-    //you don't have to implement refreshing sequence.
+    //you don't have to implement refreshing sequence. we just need button for it.
 
     //TODO: design displaying commenter/comment body and erasing button, optionally when props.data[1] == props.email
     render() {

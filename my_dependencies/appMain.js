@@ -66,12 +66,12 @@ class AppMain extends React.Component {
             let responseObj = request.response;
             let parsed_response = JSON.parse(responseObj);
 
-            console.log(responseObj);
+            //console.log(responseObj);
             //for temporary test
-            parsed_response = {
-                'exit_code': 1,
-                'data': [[1, 'commentmailA@kaist.ac.kr', 'commenterA', 'this is A comment.', 42], [1, 'commentmailB@kaist.ac.kr', 'commenterB', 'this is B comment.', 92]]
-            }
+            // parsed_response = {
+            //     'exit_code': 1,
+            //     'data': [[1, 'commentmailA@kaist.ac.kr', 'commenterA', 'this is A comment.', 42], [1, 'commentmailB@kaist.ac.kr', 'commenterB', 'this is B comment.', 92]]
+            // }
             //
             if (parsed_response.exit_code == 1) {
                 parsed_response.data.event_id = event_id;
@@ -98,6 +98,37 @@ class AppMain extends React.Component {
             }
         }
         ));
+    }
+    _AddCommentsXHR = (props) => { //props need email, password, event_id, text, text will be added later.
+        let request = new XMLHttpRequest();
+        request.onload = () => {
+            let responseObj = request.response;
+            let parsed_response = JSON.parse(responseObj);
+
+            if (parsed_response.exit_code == 1) {
+                this.MoveToCommentPage({event_id: this.state.event_data.event_id});
+            } else {
+                console.log(responseObj); //print out response.
+                MoveToCommentPage({event_id: this.state.event_data.event_id});
+            }
+        };
+        request.open('POST', 'http://13.115.154.88:5000/resource');
+        request.setRequestHeader("content-type", "application/json");
+        request.setRequestHeader("data-type", "json");
+        request.setRequestHeader("data", "my_test_data_section");
+        request.setRequestHeader("output", "json");
+        request.send(JSON.stringify({
+            'function-name': 'AddComment',
+            'argument': {
+                'email': props.email,
+                'event-id': props.event_id,
+                'comment': props.text
+        },
+            'user-info': {
+                'email': props.email,
+                'password': props.password
+            }
+        }));
     }
     MoveToCommentPage = (props) => {
         this._GetCommentsXHR(props.event_id);
@@ -139,7 +170,7 @@ class AppMain extends React.Component {
                 <EventBoard page = {this.state.page} mainPageFunc = {this.MoveToMainPage} userPageFunc = {this.MoveToUserPage} eventPageFunc = {this.MoveToEventPage} toSearch = {this.MoveToSearchPage} toEventCreation = {this.MoveToEventCreation} email = {this.state.email} password = {this.state.password}/>
                 <UserPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage} set_email_pw = {this.setEmailPassword}/>
                 <EventPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} event_data = {this.state.event_data} refreshFunc = {this.MoveToEventPage} commentFunc = {this.MoveToCommentPage}/>
-                <CommentPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} comment_data = {this.state.comment_data} eventPageFunc = { () => {this.MoveToEventPage({event_id: this.state.event_data.event_id})} }/>
+                <CommentPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} comment_data = {this.state.comment_data} eventPageFunc = { () => {this.MoveToEventPage({event_id: this.state.event_data.event_id})} } commentFunc={(text) => {var arg = {email: this.state.email, password: this.state.password, event_id: this.state.event_data.event_id, text: text}; this._AddCommentsXHR(arg)}}/>
                 <SearchPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage}/>
                 <EventCreation page = {this.state.page} mainPageFunc = {this.MoveToMainPage} email = {this.state.email} password = {this.state.password}/>
             </View>
