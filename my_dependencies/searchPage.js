@@ -627,7 +627,7 @@ class SearchPage extends React.Component {
                             </View>
                         </View>
                         <TouchableOpacity style={{ marginTop: 15 }}>
-                            <Text style={pageStyles.button2}>
+                            <Text style={pageStyles.button2} onPress = {this.onSearch}>
                                 SEARCH
                             </Text>
                         </TouchableOpacity>
@@ -643,8 +643,11 @@ class SearchPage extends React.Component {
                             </View>
                             <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
                         </View>
+                        <View style={pageStyles.container2}>
+
+                        </View>
                         <View>
-                        <TouchableOpacity style={{ marginTop: 5 }}>
+                        <TouchableOpacity style={{ marginTop: 30 }} onPress = {this.onSearchAgain}>
                             <Text style={pageStyles.button3}>
                                 Search Again
                             </Text>
@@ -671,6 +674,17 @@ const pageStyles = StyleSheet.create({
         maxHeight: Dimensions.get('window').height,
         justifyContent: 'center',
         padding: 35
+    },
+    container2: {
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#aaa',
+        marginTop: 40,
+        width: '100%',
+        height: '80%',
+        backgroundColor: '#fdfdff',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     hidden: {
         display: 'none',
