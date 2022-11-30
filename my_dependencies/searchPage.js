@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
 import { Dimensions } from 'react-native';
 
 class SearchPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: 'afterSearch' // afterSearch
+            page: 'beforeSearch' // afterSearch
         }
     }
     search = ""
@@ -127,7 +127,7 @@ class SearchPage extends React.Component {
                             </Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <TouchableOpacity style={{ alignItems: 'center', marginRight: 30 }}
-                                    onPress={this.pickCategory('taxi')}>
+                                    onPress={this.pickCategory('taxi')} >
                                     <Image
                                         style={{ width: 35, height: 35 }}
                                         source={{

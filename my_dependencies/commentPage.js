@@ -10,7 +10,7 @@ class CommentPage extends React.Component {
             page: 'event', // 'event', 'Comment'
         }
     }
-    
+
     onBack = () => { //to get out of the Comment page 
         this.props.eventPageFunc()
     }
@@ -35,26 +35,30 @@ class CommentPage extends React.Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <TextInput
-                        editable={true}
-                        maxLength={120}
-                        style={pageStyles.input_body}
-                        onChangeText={newText => this.onCommentWrite(newText)}
-                        placeholder={'you comment here'}
-                        keyboardType="default"
-                        textAlign='left'
-                        multiline={true}
-                    />
-                    <TouchableOpacity onPress={this.PostComment}>
-                        <Text>
-                            Submit Button -- design plz
-                        </Text>
-                    </TouchableOpacity>
-                    {this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={() => {}}/>)}
+                    <View style={{ flexDirection: 'row' }}>
+                        <TextInput
+                            editable={true}
+                            maxLength={120}
+                            style={pageStyles.input_body}
+                            onChangeText={newText => this.onCommentWrite(newText)}
+                            placeholder={'Add a comment...'}
+                            keyboardType="default"
+                            textAlign='left'
+                            multiline={true}
+                            borderWidth='2'
+                            borderRadius='15'
+                        />
+                        <TouchableOpacity onPress={this.PostComment}>
+                            <Text style={pageStyles.button}>
+                                Post
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    {/*{this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={() => {}}/>)}*/}
                 </View>
             );
-        }else{
-            return(
+        } else {
+            return (
                 <View style={pageStyles.hidden}>
                 </View>
             );
@@ -74,16 +78,28 @@ const pageStyles = StyleSheet.create({
         display: 'none',
     },
     input_body: {
-        width: '100%',
+        width: 280,
         maxWidth: '100%',
-        minHeight: 100,
-        fontSize: 20,
+        minHeight: 35,
+        fontSize: 16,
         textAlign: 'left',
         paddingHorizontal: 10,
 
         flexShrink: 1,
         flexWrap: 'wrap',
-        
+    },
+    button: {
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: '#CBC3E3',
+        color: 'black',
+        fontSize: 16,
+        textAlign: 'center',
+        marginLeft: 5,
+        marginHorizontal: '0%',
+        padding: 10,
+        backgroundColor: '#CBC3E3',
+        overflow: 'hidden'
     },
 });
 
