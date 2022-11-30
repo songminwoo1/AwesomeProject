@@ -6,7 +6,7 @@ class SearchPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: 'beforeSearch' // afterSearch
+            page: 'afterSearch' // afterSearch
         }
     }
     search = ""
@@ -635,10 +635,21 @@ class SearchPage extends React.Component {
                 )
             } else if (this.state.page == 'afterSearch') {
                 return (
-                    <View>
-                        <Text>
-                            this is the result page
-                        </Text>
+                    <View style={pageStyles.container}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
+                            <View>
+                                <Text style={{textAlign: 'center', marginLeft: 8, marginRight: 8, fontWeight:'600'}}>SEARCH RESULTS</Text>
+                            </View>
+                            <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
+                        </View>
+                        <View>
+                        <TouchableOpacity style={{ marginTop: 5 }}>
+                            <Text style={pageStyles.button3}>
+                                Search Again
+                            </Text>
+                        </TouchableOpacity>
+                        </View>
                     </View>
                 )
             }
@@ -694,6 +705,20 @@ const pageStyles = StyleSheet.create({
         borderColor: 'white',
         color: 'black',
         fontWeight: '700',
+        fontSize: 16,
+        textAlign: 'center',
+        marginRight: 10,
+        marginHorizontal: '0%',
+        padding: 10,
+        backgroundColor: 'lightgrey',
+        overflow: 'hidden'
+    },
+    button3: {
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: 'white',
+        color: 'black',
+        fontWeight: '500',
         fontSize: 16,
         textAlign: 'center',
         marginRight: 10,

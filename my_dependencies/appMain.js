@@ -11,7 +11,7 @@ class AppMain extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            page: "user-page",
+            page: "search-page",
             
             event_data: {},
 
