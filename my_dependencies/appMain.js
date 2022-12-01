@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, BackHandler} from 'react-native';
+import { StyleSheet, View, BackHandler, Alert} from 'react-native';
 import EventBoard from './eventBoard';
 import UserPage from './loginPage';
 import EventPage from './EventPage';
@@ -99,6 +99,9 @@ class AppMain extends React.Component {
         }
         ));
     }
+    MoveToCommentPage = (props) => {
+        this._GetCommentsXHR(props.event_id);
+    }
     _AddCommentsXHR = (props) => { //props need email, password, event_id, text, text will be added later.
         let request = new XMLHttpRequest();
         request.onload = () => {
@@ -109,7 +112,7 @@ class AppMain extends React.Component {
                 this.MoveToCommentPage({event_id: this.state.event_data.event_id});
             } else {
                 console.log(responseObj); //print out response.
-                MoveToCommentPage({event_id: this.state.event_data.event_id});
+                this.MoveToCommentPage({event_id: this.state.event_data.event_id});
             }
         };
         request.open('POST', 'http://13.115.154.88:5000/resource');
@@ -130,8 +133,36 @@ class AppMain extends React.Component {
             }
         }));
     }
-    MoveToCommentPage = (props) => {
-        this._GetCommentsXHR(props.event_id);
+    _RemoveCommentsXHR = (props) => { //props need email, password, event_id, text, text will be added later.
+        let request = new XMLHttpRequest();
+        request.onload = () => {
+            let responseObj = request.response;
+            let parsed_response = JSON.parse(responseObj);
+
+            if (parsed_response.exit_code == 1) {
+                this.MoveToCommentPage({event_id: this.state.event_data.event_id});
+            } else {
+                console.log(responseObj); //print out response.
+                this.MoveToCommentPage({event_id: this.state.event_data.event_id});
+            }
+        };
+        request.open('POST', 'http://13.115.154.88:5000/resource');
+        request.setRequestHeader("content-type", "application/json");
+        request.setRequestHeader("data-type", "json");
+        request.setRequestHeader("data", "my_test_data_section");
+        request.setRequestHeader("output", "json");
+        request.send(JSON.stringify({
+            'function-name': 'AddComment',
+            'argument': {
+                'email': props.email,
+                'event-id': props.event_id,
+                'comment-id': props.comment_id,
+        },
+            'user-info': {
+                'email': props.email,
+                'password': props.password
+            }
+        }));
     }
     MoveToEventCreation = () => {
         this.setState({page: "event-creation"});
@@ -170,7 +201,16 @@ class AppMain extends React.Component {
                 <EventBoard page = {this.state.page} mainPageFunc = {this.MoveToMainPage} userPageFunc = {this.MoveToUserPage} eventPageFunc = {this.MoveToEventPage} toSearch = {this.MoveToSearchPage} toEventCreation = {this.MoveToEventCreation} email = {this.state.email} password = {this.state.password}/>
                 <UserPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage} set_email_pw = {this.setEmailPassword}/>
                 <EventPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} event_data = {this.state.event_data} refreshFunc = {this.MoveToEventPage} commentFunc = {this.MoveToCommentPage}/>
-                <CommentPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} comment_data = {this.state.comment_data} eventPageFunc = { () => {this.MoveToEventPage({event_id: this.state.event_data.event_id})} } commentFunc={(text) => {var arg = {email: this.state.email, password: this.state.password, event_id: this.state.event_data.event_id, text: text}; this._AddCommentsXHR(arg)}}/>
+                <CommentPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} comment_data = {this.state.comment_data} 
+                    eventPageFunc = { () => {this.MoveToEventPage({event_id: this.state.event_data.event_id})} } 
+                    commentFunc={(text) => {
+                        var arg = {email: this.state.email, password: this.state.password, event_id: this.state.event_data.event_id, text: text}; 
+                        this._AddCommentsXHR(arg)}
+                    } 
+                    commentDeleteFunc={(comment_id) => {
+                        var arg = {email: this.state.email, password: this.state.password, event_id: this.state.event_data.event_id, comment_id: comment_id}; 
+                        this._RemoveCommentsXHR(arg)}
+                    }/>
                 <SearchPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage}/>
                 <EventCreation page = {this.state.page} mainPageFunc = {this.MoveToMainPage} email = {this.state.email} password = {this.state.password}/>
             </View>

@@ -13,6 +13,9 @@ class Comment extends React.Component {
     //you don't have to implement refreshing sequence. we just need button for it.
 
     //TODO: design displaying commenter/comment body and erasing button, optionally when props.data[1] == props.email
+    erase = () => {
+        this.props.eraseFunc(this.props.data[0])
+    }
     render() {
         return (
             <View style={pageStyles.container}>
@@ -26,7 +29,7 @@ class Comment extends React.Component {
                         </Text>
                     </View>
                     <View style={{ justifyContent: 'flex-end' }}>
-                        <TouchableOpacity onPress={this.props.eraseFunc()}>
+                        <TouchableOpacity onPress={this.erase}>
                             <Image
                                 style={{ width: 20, height: 20 }}
                                 source={{

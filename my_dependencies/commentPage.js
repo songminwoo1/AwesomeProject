@@ -53,7 +53,7 @@ class CommentPage extends React.Component {
                                 Post
                         </Text>
                     </TouchableOpacity>
-                    {this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={() => {}}/>)}
+                    {this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={this.props.commentDeleteFunc}/>)}
                 </View>
             );
         } else {
