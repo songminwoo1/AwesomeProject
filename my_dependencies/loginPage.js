@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native';
-import {Dimensions} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image } from 'react-native';
+import { Dimensions } from 'react-native';
 
 class UserPage extends React.Component {
     constructor(props) {
@@ -39,19 +39,19 @@ class UserPage extends React.Component {
     }
 
     onLoginError = () => {
-        this.setState({page: 'loginError'});
+        this.setState({ page: 'loginError' });
     }
 
     onLoginSuccess = () => {
-        this.setState({page: 'loggedin'});
+        this.setState({ page: 'loggedin' });
     }
 
     onUserNotExist = () => {
-        this.setState({page: 'unknownUser'});
+        this.setState({ page: 'unknownUser' });
     }
 
     toSignin = () => {
-        this.setState({page: 'signin'});
+        this.setState({ page: 'signin' });
     }
 
     trySignin = () => {
@@ -59,32 +59,32 @@ class UserPage extends React.Component {
     }
 
     toSigninFail = () => {
-        this.setState({page: 'signinFail'});
+        this.setState({ page: 'signinFail' });
     }
 
     toVerify = () => {
-        this.setState({page: 'verify'});
+        this.setState({ page: 'verify' });
     }
     toVerifyFail = () => {
-        this.setState({page: 'verifyFail'});
+        this.setState({ page: 'verifyFail' });
     }
 
     toSigninSending = () => {
-        if (this.state.page == 'signin' || this.state.page == 'signinFail'){
-            this.setState({page: 'signinSending'});
+        if (this.state.page == 'signin' || this.state.page == 'signinFail') {
+            this.setState({ page: 'signinSending' });
         }
     }
 
     toLogin = () => {
-        this.setState({page: 'login'});
+        this.setState({ page: 'login' });
     }
 
     toLoggedin = () => {
-        this.setState({page: 'loggedin'});
+        this.setState({ page: 'loggedin' });
     }
 
     toLoginAgain = () => {
-        this.setState({page: 'loginAgain'});
+        this.setState({ page: 'loginAgain' });
     }
 
     _LoginXHR = (email, password) => {
@@ -95,15 +95,15 @@ class UserPage extends React.Component {
             let parsed_response = JSON.parse(responseObj);
             if (parsed_response.error_msg == 'Login: Ask to Register') {
                 this.onUserNotExist();
-            }else if(parsed_response.exit_code == 0) {
+            } else if (parsed_response.exit_code == 0) {
                 this.onLoginError();
-            }else if(parsed_response.exit_code == 1) {
+            } else if (parsed_response.exit_code == 1) {
                 this.toLoggedin();
                 this.props.set_email_pw(this.email, this.password);
                 this.props.mainPageFunc();
             }
         };
-        
+
         request.open('POST', 'http://13.115.154.88:5000/resource');
         request.setRequestHeader("content-type", "application/json");
         request.setRequestHeader("data-type", "json");
@@ -125,13 +125,13 @@ class UserPage extends React.Component {
             let responseObj = request.response;
             //alert(responseObj); //print out response.
             let parsed_response = JSON.parse(responseObj);
-            if(parsed_response.exit_code == 1) {
+            if (parsed_response.exit_code == 1) {
                 this.toVerify();
             } else {
                 this.toSigninFail();
             }
         };
-        
+
         request.open('POST', 'http://13.115.154.88:5000/resource');
         request.setRequestHeader("content-type", "application/json");
         request.setRequestHeader("data-type", "json");
@@ -152,20 +152,20 @@ class UserPage extends React.Component {
     checkVFC = () => {
         this._VFCCheckXHR(this.verifyCode);
     }
-    
+
     _VFCCheckXHR = (vfc) => {
         let request = new XMLHttpRequest();
         request.onload = () => {
             let responseObj = request.response;
             //alert(responseObj); //print out response.
             let parsed_response = JSON.parse(responseObj);
-            if(parsed_response.exit_code == 1) {
+            if (parsed_response.exit_code == 1) {
                 this.toLoginAgain();
             } else {
                 this.toVerifyFail();
             }
         };
-        
+
         request.open('POST', 'http://13.115.154.88:5000/resource');
         request.setRequestHeader("content-type", "application/json");
         request.setRequestHeader("data-type", "json");
@@ -174,19 +174,33 @@ class UserPage extends React.Component {
         request.send(JSON.stringify({
             'function-name': 'RegisterVerify',
             'user-info': {
-                'email': this.email, 
-                'password': this.password, 
+                'email': this.email,
+                'password': this.password,
                 'username': this.username,
                 'code': vfc
             }
         }));
     }
-    
+
+    onBack = () => { //to get out of the event creation page 
+        this.props.mainPageFunc()
+    }
+
     render() {
-        if(this.props.page == "user-page"){
+        if (this.props.page == "user-page") {
             if (this.state.page == 'loggedin') {
                 return (
                     <View style={pageStyles.container}>
+                        <View style={{ justifyContent: 'flex-start', marginLeft: 40, marginBottom: 20 }}>
+                            <TouchableOpacity onPress={this.onBack}>
+                                <Image
+                                    style={{ width: 40, height: 40 }}
+                                    source={{
+                                        uri: 'https://cdn-icons-png.flaticon.com/512/2/2144.png'
+                                    }}
+                                />
+                            </TouchableOpacity>
+                        </View>
                         <View style={pageStyles.center}>
                             <Text style={pageStyles.title}>
                                 KAIShare User
@@ -197,7 +211,7 @@ class UserPage extends React.Component {
                         </View>
                     </View>
                 );
-            }else if (this.state.page == 'login') {
+            } else if (this.state.page == 'login') {
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
@@ -214,7 +228,7 @@ class UserPage extends React.Component {
                                     placeholder="Email"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -230,7 +244,7 @@ class UserPage extends React.Component {
                         </View>
                     </View>
                 );
-            }else if (this.state.page == 'loginAgain') {
+            } else if (this.state.page == 'loginAgain') {
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
@@ -250,7 +264,7 @@ class UserPage extends React.Component {
                                     placeholder="Email"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -266,7 +280,7 @@ class UserPage extends React.Component {
                         </View>
                     </View>
                 );
-            }else if (this.state.page == 'loginError') {
+            } else if (this.state.page == 'loginError') {
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
@@ -283,7 +297,7 @@ class UserPage extends React.Component {
                                     placeholder="Email"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -302,7 +316,7 @@ class UserPage extends React.Component {
                         </View>
                     </View>
                 );
-            }else if (this.state.page == 'unknownUser'){
+            } else if (this.state.page == 'unknownUser') {
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
@@ -319,7 +333,7 @@ class UserPage extends React.Component {
                                     placeholder="Email"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -341,7 +355,7 @@ class UserPage extends React.Component {
                         </View>
                     </View>
                 );
-            }else if (this.state.page == 'signin') {
+            } else if (this.state.page == 'signin') {
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
@@ -358,7 +372,7 @@ class UserPage extends React.Component {
                                     placeholder="Email"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -367,7 +381,7 @@ class UserPage extends React.Component {
                                     placeholder="Password"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -376,7 +390,7 @@ class UserPage extends React.Component {
                                     placeholder="Password(repeat)"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -395,7 +409,7 @@ class UserPage extends React.Component {
                         </View>
                     </View>
                 );
-            }else if (this.state.page == 'signinSending') {
+            } else if (this.state.page == 'signinSending') {
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
@@ -412,7 +426,7 @@ class UserPage extends React.Component {
                                     placeholder="Email"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -421,7 +435,7 @@ class UserPage extends React.Component {
                                     placeholder="Password"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -430,7 +444,7 @@ class UserPage extends React.Component {
                                     placeholder="Password(repeat)"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -446,7 +460,7 @@ class UserPage extends React.Component {
                         </View>
                     </View>
                 );
-            }else if (this.state.page == 'signinFail') {
+            } else if (this.state.page == 'signinFail') {
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
@@ -463,7 +477,7 @@ class UserPage extends React.Component {
                                     placeholder="Email"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -472,7 +486,7 @@ class UserPage extends React.Component {
                                     placeholder="Password"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -481,7 +495,7 @@ class UserPage extends React.Component {
                                     placeholder="Password(repeat)"
                                     keyboardType="default"
                                 />
-                                <View style={pageStyles.hr}/>
+                                <View style={pageStyles.hr} />
                                 <TextInput
                                     editable={true}
                                     maxLength={40}
@@ -503,7 +517,7 @@ class UserPage extends React.Component {
                         </View>
                     </View>
                 );
-            }else if (this.state.page == 'verify') {
+            } else if (this.state.page == 'verify') {
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
@@ -532,7 +546,7 @@ class UserPage extends React.Component {
                         </View>
                     </View>
                 );
-            }else if (this.state.page == 'verifyFail') {
+            } else if (this.state.page == 'verifyFail') {
                 return (
                     <View style={pageStyles.container}>
                         <View style={pageStyles.center}>
@@ -562,7 +576,7 @@ class UserPage extends React.Component {
                     </View>
                 );
             }
-        }else{
+        } else {
             return (
                 <View style={pageStyles.hidden}>
                 </View>

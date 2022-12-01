@@ -35,7 +35,7 @@ class EventPage extends React.Component {
         this.props.commentFunc({event_id: this.props.event_data.event_id});
     }
 
-    onBack = () => { //to get out of the Comment page 
+    onBack = () => { //to get out of the Event page 
         this.props.mainPageFunc()
     }
 
@@ -189,7 +189,7 @@ class EventPage extends React.Component {
                                     <Image
                                         style={{ width: 40, height: 40 }}
                                         source={{
-                                            uri: 'https://cdn-icons-png.flaticon.com/512/93/93634.png'
+                                            uri: 'https://cdn-icons-png.flaticon.com/512/2/2144.png'
                                         }}
                                     />
                                 </TouchableOpacity>
@@ -274,7 +274,7 @@ class EventPage extends React.Component {
                                     <Image
                                         style={{ width: 40, height: 40 }}
                                         source={{
-                                            uri: 'https://cdn-icons-png.flaticon.com/512/93/93634.png'
+                                            uri: 'https://cdn-icons-png.flaticon.com/512/2/2144.png'
                                         }}
                                     />
                                 </TouchableOpacity>
@@ -361,7 +361,7 @@ class EventPage extends React.Component {
                                     <Image
                                         style={{ width: 40, height: 40 }}
                                         source={{
-                                            uri: 'https://cdn-icons-png.flaticon.com/512/93/93634.png'
+                                            uri: 'https://cdn-icons-png.flaticon.com/512/2/2144.png'
                                         }}
                                     />
                                 </TouchableOpacity>
@@ -446,7 +446,7 @@ class EventPage extends React.Component {
                                     <Image
                                         style={{ width: 40, height: 40 }}
                                         source={{
-                                            uri: 'https://cdn-icons-png.flaticon.com/512/93/93634.png'
+                                            uri: 'https://cdn-icons-png.flaticon.com/512/2/2144.png'
                                         }}
                                     />
                                 </TouchableOpacity>
@@ -538,13 +538,13 @@ const pageStyles = StyleSheet.create({
         minWidth: Dimensions.get('window').width,
         minHeight: Dimensions.get('window').height,
         justifyContent: 'center',
-        padding: 60,
+        padding: 35,
     },
     container2: {
         flexDirection: 'column',
         minWidth: Dimensions.get('window').width,
         minHeight: Dimensions.get('window').height,
-        padding: 60,
+        padding: 35,
     },
     hidden: {
         display: 'none',

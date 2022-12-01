@@ -101,7 +101,7 @@ class SearchPage extends React.Component {
                                 <Image
                                     style={{ width: 40, height: 40 }}
                                     source={{
-                                        uri: 'https://cdn-icons-png.flaticon.com/512/93/93634.png'
+                                        uri: 'https://cdn-icons-png.flaticon.com/512/2/2144.png'
                                     }}
                                 />
                             </TouchableOpacity>
@@ -284,7 +284,7 @@ class SearchPage extends React.Component {
                                 keyboardType="numeric"
                             />
                         </View>
-                        <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'top' }}>
+                        <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'top', paddingRight:30}}>
                             <Text style={pageStyles.text}>
                                 LOCATION :
                             </Text>
@@ -673,7 +673,7 @@ const pageStyles = StyleSheet.create({
         maxWidth: Dimensions.get('window').width,
         maxHeight: Dimensions.get('window').height,
         justifyContent: 'center',
-        padding: 35
+        padding: 35,
     },
     container2: {
         borderRadius: 10,
@@ -707,7 +707,6 @@ const pageStyles = StyleSheet.create({
         color: 'black',
         fontSize: 11,
         textAlign: 'center',
-        marginRight: 10,
         marginHorizontal: '0%',
         padding: 10,
         backgroundColor: '#CBC3E3',

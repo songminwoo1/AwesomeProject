@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Button, Text, View, TouchableOpacity, TextInput, Image, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Button, Text, View, TouchableOpacity, TextInput, Image, SafeAreaView, ScrollView, RefreshControl} from 'react-native';
 import { Dimensions } from 'react-native';
 import Comment from './comment';
 
@@ -21,6 +21,12 @@ class CommentPage extends React.Component {
     PostComment = () => {
         this.props.commentFunc(this.comment_text);
     }
+
+    PostCommentAndClearText = () => {
+        this.PostComment();
+        this.textInput.clear();
+    }
+
     render() {
         if (this.props.page == "comment-page") {
             return (
@@ -35,7 +41,7 @@ class CommentPage extends React.Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', bottomMargin: 10 }}>
                         <TextInput
                             editable={true}
                             maxLength={120}
@@ -44,17 +50,20 @@ class CommentPage extends React.Component {
                             placeholder={'Add a comment...'}
                             keyboardType="default"
                             textAlign='left'
-                            multiline={true}
                             borderWidth='2'
                             borderRadius='15'
+                            multiline={true}
+                            blurOnSubmit={true}
+                            ref={input => { this.textInput = input }} 
                         />
-                        <TouchableOpacity onPress={this.PostComment}>
+                        
+                        <TouchableOpacity onPress={this.PostCommentAndClearText}>
                             <Text style={pageStyles.button}>
                                 Post
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    {this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={() => {}}/>)}
+                    {this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={() => { }} />)}
                 </View>
             );
         } else {
@@ -72,7 +81,7 @@ const pageStyles = StyleSheet.create({
         minWidth: Dimensions.get('window').width,
         minHeight: Dimensions.get('window').height,
         justifyContent: 'center',
-        padding: 60
+        padding: 35
     },
     hidden: {
         display: 'none',

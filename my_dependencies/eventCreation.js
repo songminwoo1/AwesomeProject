@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
-import {Dimensions} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image } from 'react-native';
+import { Dimensions } from 'react-native';
 
 class EventCreation extends React.Component {
     constructor(props) {
@@ -17,6 +17,10 @@ class EventCreation extends React.Component {
     time = 0;
     num_mem = 0;
 
+    onBack = () => { //to get out of the event creation page 
+        this.props.mainPageFunc()
+    }
+
     onChangeTitle = (text) => {
         this.title = text;
     }
@@ -25,12 +29,12 @@ class EventCreation extends React.Component {
     }
 
     pickCategory = (cat) => {
-        this.setState({category: cat});
+        this.setState({ category: cat });
         //this.category = cat;
     }
 
     pickPlace = (place) => {
-        this.setState({place: place});
+        this.setState({ place: place });
         //this.place = place;
     }
 
@@ -61,33 +65,33 @@ class EventCreation extends React.Component {
     onSubmit = () => {
         if (this.year.length == 2) {
             this.year = '20' + this.year;
-        }else if(this.year.length != 4) {
+        } else if (this.year.length != 4) {
             this.year = '1970';
         }
-        
+
         if (this.month.length == 1) {
             this.month = '0' + this.month;
-        }else if (this.month.length != 2) {
+        } else if (this.month.length != 2) {
             this.month = '00'
         }
         if (this.day.length == 1) {
             this.day = '0' + this.day;
-        }else if (this.day.length != 2) {
+        } else if (this.day.length != 2) {
             this.day = '00'
         }
         if (this.hour.length == 1) {
             this.hour = '0' + this.hour;
-        }else if (this.hour.length != 2) {
+        } else if (this.hour.length != 2) {
             this.hour = '99'
         }
         if (this.minute.length == 1) {
             this.minute = '0' + this.minute;
-        }else if (this.minute.length != 2) {
+        } else if (this.minute.length != 2) {
             this.minute = '99'
         }
 
         var m = '';
-        switch(this.month){
+        switch (this.month) {
             case '1':
                 m = 'Jan';
                 break;
@@ -138,17 +142,17 @@ class EventCreation extends React.Component {
             let responseObj = request.response;
             //alert(responseObj); //print out response.
             let parsed_response = JSON.parse(responseObj);
-            if(parsed_response.exit_code == 0) {
+            if (parsed_response.exit_code == 0) {
                 //TODO: post fail
                 // alert("event post failed");
                 alert(responseObj); //print out response.
-            }else if(parsed_response.exit_code == 1) {
+            } else if (parsed_response.exit_code == 1) {
                 //TODO: post success
                 alert("event post success!");
                 this.props.mainPageFunc();
             }
         };
-        
+
         request.open('POST', 'http://13.115.154.88:5000/resource');
         request.setRequestHeader("content-type", "application/json");
         request.setRequestHeader("data-type", "json");
@@ -174,15 +178,32 @@ class EventCreation extends React.Component {
     }
 
     render() {
-        if(this.props.page == "event-creation") {
+        if (this.props.page == "event-creation") {
             return (
                 <View style={pageStyles.container}>
-                    <Text style={pageStyles.page_title}>
-                        [] Posting New Event
-                    </Text>
+                    <View style={{ justifyContent: 'flex-start', marginLeft: 60, marginBottom: 20 }}>
+                        <TouchableOpacity onPress={this.onBack}>
+                            <Image
+                                style={{ width: 40, height: 40 }}
+                                source={{
+                                    uri: 'https://cdn-icons-png.flaticon.com/512/2/2144.png'
+                                }}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 60, marginBottom: 15,}}>
+                        <Image
+                            style={{ width: 30, height: 30, marginRight: 10 }}
+                            source={{
+                                uri: 'https://cdn-icons-png.flaticon.com/512/1250/1250611.png'}}
+                        />
+                        <Text style={{ fontSize: 25,fontWeight: '300',color: '#007'}}>
+                            Posting New Event
+                        </Text>
+                    </View>
                     <View style={pageStyles.common}>
                         <Text style={pageStyles.title}>
-                               POST TITLE
+                            POST TITLE
                         </Text>
                         <TextInput
                             editable={true}
@@ -192,7 +213,7 @@ class EventCreation extends React.Component {
                             placeholder="type event title here"
                             keyboardType="default"
                         />
-                        <View style = {pageStyles.rowst}>
+                        <View style={pageStyles.rowst}>
                             <Text style={pageStyles.title}>
                                 {'DATE & TIME:  '}
                             </Text>
@@ -259,9 +280,9 @@ class EventCreation extends React.Component {
                                 multiline={true}
                             />
                         </View>
-                        <View style = {pageStyles.rowst}>
+                        <View style={pageStyles.rowst}>
                             <Text style={pageStyles.title}>
-                                    MAX PEOPLE:
+                                MAX PEOPLE:
                             </Text>
                             <TextInput
                                 editable={true}
@@ -275,9 +296,9 @@ class EventCreation extends React.Component {
                             />
                         </View>
                         <Text style={pageStyles.title}>
-                               BODY
+                            BODY
                         </Text>
-                        <View style={pageStyles.postContent}> 
+                        <View style={pageStyles.postContent}>
                             <TextInput
                                 editable={true}
                                 maxLength={500}
@@ -293,19 +314,19 @@ class EventCreation extends React.Component {
                             CATEGORY: {this.state.category}
                         </Text>
                         <View style={pageStyles.cat_button_list}>
-                            <TouchableOpacity onPress = {() => {this.pickCategory("taxi")}}>
+                            <TouchableOpacity onPress={() => { this.pickCategory("taxi") }}>
                                 <Text style={pageStyles.cat_button}>
-                                    taxi
+                                    Taxi
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickCategory("food")}}>
+                            <TouchableOpacity onPress={() => { this.pickCategory("food") }}>
                                 <Text style={pageStyles.cat_button}>
-                                    food
+                                    Food
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickCategory("purchase")}}>
+                            <TouchableOpacity onPress={() => { this.pickCategory("purchase") }}>
                                 <Text style={pageStyles.cat_button}>
-                                    purchase
+                                    Group purchase
                                 </Text>
                             </TouchableOpacity>
                         </View>
@@ -313,337 +334,337 @@ class EventCreation extends React.Component {
                             PLACE: {this.state.place}
                         </Text>
                         <View style={pageStyles.cat_button_list}>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E1")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E1") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E1
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E2")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E2") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E2
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E3")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E3") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E3
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E4")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E4") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E4
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E5")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E5") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E5
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E6")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E6") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E6
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E7")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E7") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E7
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E8")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E8") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E8
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E9")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E9") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E9
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E9-1")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E9-1") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E9-1
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E10")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E10") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E10
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E11")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E11") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E11
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E12")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E12") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E12
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E13")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E13") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E13
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E14")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E14") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E14
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E15")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E15") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E15
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E16")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E16") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E16
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E17")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E17") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E17
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E18-1")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E18-1") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E18-1
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E18-2")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E18-2") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E18-2
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E19")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E19") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E19
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E20")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E20") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E20
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("E21")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("E21") }}>
                                 <Text style={pageStyles.cat_button}>
                                     E21
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N0")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N0") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N0
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N1")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N1") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N1
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N2")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N2") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N2
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N3")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N3") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N3
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N4")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N4") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N4
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N5")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N5") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N5
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N6")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N6") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N6
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N7")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N7") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N7
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N9")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N9") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N9
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N10")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N10") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N10
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N11")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N11") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N11
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N12")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N12") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N12
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N13")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N13") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N13
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N14")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N14") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N14
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N15")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N15") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N15
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N16")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N16") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N16
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N17")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N17") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N17
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N18")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N18") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N18
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N19")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N19") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N19
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N20")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N20") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N20
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N21")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N21") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N21
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N22")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N22") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N22
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N23")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N23") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N23
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N24")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N24") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N24
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N25")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N25") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N25
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N26")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N26") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N26
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N27")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N27") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N27
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("N28")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("N28") }}>
                                 <Text style={pageStyles.cat_button}>
                                     N28
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W1")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W1") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W1
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W2")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W2") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W2
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W3")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W3") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W3
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W4-1")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W4-1") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W4-1
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W4-2")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W4-2") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W4-2
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W4-3")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W4-3") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W4-3
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W4-4")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W4-4") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W4-4
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W5-1")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W5-1") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W5-1
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W5-2")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W5-2") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W5-2
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W6")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W6") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W6
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W7")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W7") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W7
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W8")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W8") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W8
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W9")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W9") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W9
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W10")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W10") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W10
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W11")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W11") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W11
                                 </Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress = {() => {this.pickPlace("W16")}}>
+                            <TouchableOpacity onPress={() => { this.pickPlace("W16") }}>
                                 <Text style={pageStyles.cat_button}>
                                     W16
                                 </Text>
@@ -652,15 +673,15 @@ class EventCreation extends React.Component {
                         </View>
                     </View>
                     <View style={pageStyles.submitDiv}>
-                        <TouchableOpacity onPress = {this.onSubmit}>
+                        <TouchableOpacity onPress={this.onSubmit}>
                             <Text style={pageStyles.button}>
-                                Submit
+                                POST
                             </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             )
-        }else {
+        } else {
             <View style={pageStyles.hidden}>
             </View>
         }
@@ -730,7 +751,7 @@ const pageStyles = StyleSheet.create({
     },
     postText: {
         color: 'black',
-        fontSize:16,
+        fontSize: 16,
         textAlign: 'left',
         margin: 15,
     },
@@ -741,10 +762,10 @@ const pageStyles = StyleSheet.create({
     title: {
         paddingLeft: 60,
         color: 'black',
-        fontSize:16,
+        fontSize: 16,
         textAlign: 'left',
         fontWeight: '500',
-        
+
     },
     context: {
         color: 'black',
@@ -772,7 +793,7 @@ const pageStyles = StyleSheet.create({
 
         flexShrink: 1,
         flexWrap: 'wrap',
-        
+
     },
     hr: {
         borderWidth: 0.5,
@@ -802,26 +823,30 @@ const pageStyles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     cat_button: {
-        fontSize: 16,
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: 'white',
+        color: 'black',
+        fontSize: 14,
         textAlign: 'center',
-        // borderWidth: 1,
-        borderRadius: 8,
-        backgroundColor: '#ddf',
-        margin: 5,
-        marginBottom: 0,
-        paddingHorizontal: 7,
-        paddingBottom: 2,
+        marginHorizontal: '0%',
+        padding: 8,
+        backgroundColor: '#CBC3E3',
+        overflow: 'hidden'
     },
     button: {
         borderWidth: 2,
         width: 80,
-        borderRadius: 10,
-        color: "#03f",
+        borderRadius: 15,
+        color: "white",
         fontSize: 18,
+        fontWeight: '700',
         textAlign: 'center',
+        borderColor: '#6495ED',
+        backgroundColor:'#6495ED',
+        overflow: 'hidden',
         marginRight: 10,
-        padding: 2,
-        paddingBottom: 0,
+        padding: 5,
     },
 });
 
