@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Button, Text, View, TouchableOpacity, TextInput, Image, SafeAreaView, ScrollView, RefreshControl} from 'react-native';
+import { StyleSheet, Button, Text, View, TouchableOpacity, TextInput, Image, SafeAreaView, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
 import Comment from './comment';
 
@@ -10,7 +10,7 @@ class CommentPage extends React.Component {
             page: 'event', // 'event', 'Comment'
         }
     }
-
+    
     onBack = () => { //to get out of the Comment page 
         this.props.eventPageFunc()
     }
@@ -19,14 +19,10 @@ class CommentPage extends React.Component {
         this.comment_text = text;
     }
     PostComment = () => {
-        this.props.commentFunc(this.comment_text);
-    }
-
-    PostCommentAndClearText = () => {
-        this.PostComment();
+        let text = this.comment_text;
         this.textInput.clear();
+        this.props.commentFunc(text);
     }
-
     render() {
         if (this.props.page == "comment-page") {
             return (
@@ -41,29 +37,23 @@ class CommentPage extends React.Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flexDirection: 'row', bottomMargin: 10 }}>
-                        <TextInput
-                            editable={true}
-                            maxLength={120}
-                            style={pageStyles.input_body}
-                            onChangeText={newText => this.onCommentWrite(newText)}
-                            placeholder={'Add a comment...'}
-                            keyboardType="default"
-                            textAlign='left'
-                            borderWidth='2'
-                            borderRadius='15'
-                            multiline={true}
-                            blurOnSubmit={true}
-                            ref={input => { this.textInput = input }} 
-                        />
-                        
-                        <TouchableOpacity onPress={this.PostCommentAndClearText}>
-                            <Text style={pageStyles.button}>
+                    <TextInput
+                        editable={true}
+                        maxLength={120}
+                        style={pageStyles.input_body}
+                        onChangeText={newText => this.onCommentWrite(newText)}
+                        placeholder={'you comment here'}
+                        keyboardType="default"
+                        textAlign='left'
+                        multiline={true}
+                        ref={input => { this.textInput = input }}
+                    />
+                    <TouchableOpacity onPress={this.PostComment}>
+                        <Text style={pageStyles.button}>
                                 Post
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    {this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={() => { }} />)}
+                        </Text>
+                    </TouchableOpacity>
+                    {this.props.comment_data.map((e) => <Comment data={e} email={this.props.email} eraseFunc={() => {}}/>)}
                 </View>
             );
         } else {
@@ -81,16 +71,16 @@ const pageStyles = StyleSheet.create({
         minWidth: Dimensions.get('window').width,
         minHeight: Dimensions.get('window').height,
         justifyContent: 'center',
-        padding: 35
+        padding: 60
     },
     hidden: {
         display: 'none',
     },
     input_body: {
-        width: 280,
+        width: '100%',
         maxWidth: '100%',
-        minHeight: 35,
-        fontSize: 16,
+        minHeight: 100,
+        fontSize: 20,
         textAlign: 'left',
         paddingHorizontal: 10,
 
