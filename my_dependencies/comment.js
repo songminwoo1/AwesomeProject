@@ -17,30 +17,47 @@ class Comment extends React.Component {
         this.props.eraseFunc(this.props.data[0])
     }
     render() {
-        return (
-            <View style={pageStyles.container}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'column' }}>
-                        <Text style={{ color: 'blue', fontSize: 16, fontWeight: '500'}}>
-                            {this.props.data[2]}
-                        </Text>
-                        <Text style={{maxWidth: 320}}>
-                            {this.props.data[3]}
-                        </Text>
-                    </View>
-                    <View style={{ justifyContent: 'flex-end' }}>
-                        <TouchableOpacity onPress={this.erase}>
-                            <Image
-                                style={{ width: 20, height: 20 }}
-                                source={{
-                                    uri: 'https://cdn-icons-png.flaticon.com/512/1214/1214428.png'
-                                }}
-                            />
-                        </TouchableOpacity>
+        if (this.props.data[1] == this.props.email){
+            return (
+                <View style={pageStyles.container}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'column' }}>
+                            <Text style={{ color: 'blue', fontSize: 16, fontWeight: '500'}}>
+                                {this.props.data[2]}
+                            </Text>
+                            <Text style={{maxWidth: 320}}>
+                                {this.props.data[3]}
+                            </Text>
+                        </View>
+                        <View style={{ justifyContent: 'flex-end' }}>
+                            <TouchableOpacity onPress={this.erase}>
+                                <Image
+                                    style={{ width: 20, height: 20 }}
+                                    source={{
+                                        uri: 'https://cdn-icons-png.flaticon.com/512/1214/1214428.png'
+                                    }}
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </View>
-        );
+            );
+        }else {
+            return (
+                <View style={pageStyles.container}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'column' }}>
+                            <Text style={{ color: 'blue', fontSize: 16, fontWeight: '500'}}>
+                                {this.props.data[2]}
+                            </Text>
+                            <Text style={{maxWidth: 320}}>
+                                {this.props.data[3]}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            );
+        }
     }
 }
 
