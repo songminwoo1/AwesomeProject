@@ -152,7 +152,7 @@ class AppMain extends React.Component {
         request.setRequestHeader("data", "my_test_data_section");
         request.setRequestHeader("output", "json");
         request.send(JSON.stringify({
-            'function-name': 'AddComment',
+            'function-name': 'DeleteComment',
             'argument': {
                 'email': props.email,
                 'event-id': props.event_id,
