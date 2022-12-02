@@ -211,7 +211,7 @@ class AppMain extends React.Component {
                         var arg = {email: this.state.email, password: this.state.password, event_id: this.state.event_data.event_id, comment_id: comment_id}; 
                         this._RemoveCommentsXHR(arg)}
                     }/>
-                <SearchPage page = {this.state.page} mainPageFunc = {this.MoveToMainPage}/>
+                <SearchPage page = {this.state.page} email = {this.state.email} password = {this.state.password} mainPageFunc = {this.MoveToMainPage} eventPageFunc = {this.MoveToEventPage}/>
                 <EventCreation page = {this.state.page} mainPageFunc = {this.MoveToMainPage} email = {this.state.email} password = {this.state.password}/>
             </View>
         );

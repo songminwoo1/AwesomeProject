@@ -92,31 +92,31 @@ class EventCreation extends React.Component {
 
         var m = '';
         switch (this.month) {
-            case '1':
+            case '01':
                 m = 'Jan';
                 break;
-            case '2':
+            case '02':
                 m = 'Feb';
                 break;
-            case '3':
+            case '03':
                 m = 'Mar';
                 break;
-            case '4':
+            case '04':
                 m = 'Apr';
                 break;
-            case '5':
+            case '05':
                 m = 'May';
                 break;
-            case '6':
+            case '06':
                 m = 'Jun';
                 break;
-            case '7':
+            case '07':
                 m = 'Jul';
                 break;
-            case '8':
+            case '08':
                 m = 'Aug';
                 break;
-            case '9':
+            case '09':
                 m = 'Sep';
                 break;
             case '10':
