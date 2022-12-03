@@ -21,11 +21,9 @@ const TimeAsString = (t) => {
     var hours = date.getUTCHours();
     // Minutes part from the timestamp
     var minutes = "0" + date.getUTCMinutes();
-    // Seconds part from the timestamp
-    var seconds = "0" + date.getUTCSeconds();
 
     // Will display time in 10:30:23 format
-    return year + "/" + month + "/" + day + " " + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    return year + "/" + month + "/" + day + " " + hours + ':' + minutes.substr(-2);
 }
 
 class EventPage extends React.Component {
@@ -82,10 +80,10 @@ class EventPage extends React.Component {
             let responseObj = request.response;
             //alert(responseObj); //print out response.
             let parsed_response = JSON.parse(responseObj);
-            if (parsed_response.exit_code == 10) {
-                alert(responseObj); //print out response.
+            if (parsed_response.exit_code == 1) {
+                this.props.refreshFunc({event_id: event_id});
             } else if (parsed_response.exit_code == 0) {
-                this.props.refreshFunc(event_id);
+                alert(responseObj); //print out response.
             }
 
         };
@@ -117,7 +115,7 @@ class EventPage extends React.Component {
             if (parsed_response.exit_code == 0) {
                 alert(responseObj); //print out response.
             } else if (parsed_response.exit_code == 1) {
-                alert("Left!");
+                this.props.refreshFunc({event_id: event_id});
             }
 
         };
@@ -149,7 +147,7 @@ class EventPage extends React.Component {
             if (parsed_response.exit_code == 0) {
                 alert(responseObj); //print out response.
             } else if (parsed_response.exit_code == 1) {
-                alert("Closed!");
+                this.props.refreshFunc({event_id: event_id});
             }
 
         };
@@ -180,8 +178,8 @@ class EventPage extends React.Component {
             let parsed_response = JSON.parse(responseObj);
             if (parsed_response.exit_code == 0) {
                 alert(responseObj); //print out response.
-            } else if (parsed_response.exit_code == 1) {
-                alert("Disabled!");
+            } else if (parsed_response.exit_code == 1) { 
+                this.props.mainPageFunc()
             }
 
         };

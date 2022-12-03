@@ -37,7 +37,8 @@ class AppMain extends React.Component {
                 parsed_response.data.event_id = event_id;
                 this.setState({page: "event-page", event_data: parsed_response.data});
             } else {
-                alert(responseObj); //print out response.
+                alert("this event is currently unavailable.");
+                //alert(responseObj); //print out response.
             }
         };
         request.open('POST', 'http://13.115.154.88:5000/resource');

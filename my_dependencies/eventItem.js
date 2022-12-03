@@ -1,6 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
+const GMTToKorTime = (t) => {
+    return t + 32400;
+}
+const TimeAsString = (t) => {
+    var date = new Date(t * 1000);
+
+    var year = date.getUTCFullYear();
+    var month = date.getUTCMonth() + 1;
+    var day = date.getUTCDate();
+
+    // Hours part from the timestamp
+    var hours = date.getUTCHours();
+    // Minutes part from the timestamp
+    var minutes = "0" + date.getUTCMinutes();
+
+    // Will display time in 10:30:23 format
+    return year + "/" + month + "/" + day + " " + hours + ':' + minutes.substr(-2);
+}
+
 class RenderItem extends React.Component {
     constructor(props) {
         super(props);
@@ -21,7 +40,7 @@ class RenderItem extends React.Component {
                         <Text style={itemStyles.body_text}>{this.props.body}</Text>
                     </View>
                     <View style={itemStyles.footer}>
-                        <Text style={itemStyles.footerText}>{this.props.posttime}</Text>
+                        <Text style={itemStyles.footerText}>{ TimeAsString(GMTToKorTime(this.props.eventtime))}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
