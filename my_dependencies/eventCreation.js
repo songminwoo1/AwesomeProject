@@ -2,6 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image } from 'react-native';
 import { Dimensions } from 'react-native';
 
+const KorTimeToGMT = (t) => {
+    return t - 32400;
+}
+
 class EventCreation extends React.Component {
     constructor(props) {
         super(props);
@@ -166,7 +170,7 @@ class EventCreation extends React.Component {
                 'title': title,
                 'content': content,
                 'place': place,
-                'event-time': event_time,
+                'event-time': KorTimeToGMT(event_time),
                 'num-member': num_mem,
             },
             'user-info': {

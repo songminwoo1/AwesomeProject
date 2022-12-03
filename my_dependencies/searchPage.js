@@ -256,7 +256,6 @@ class SearchPage extends React.Component {
         request.onload = () => {
             let responseObj = request.response;
             let parsed_response = JSON.parse(responseObj);
-            console.log(parsed_response);
             if (parsed_response.exit_code == 1) {
                 this.toSearchResult(parsed_response.data);
             }

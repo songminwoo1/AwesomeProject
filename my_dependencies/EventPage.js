@@ -2,6 +2,32 @@ import React from 'react';
 import { StyleSheet, Button, Text, View, TouchableOpacity, TextInput, Image, SafeAreaView, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
 
+const KorTimeToGMT = (t) => {
+    return t - 32400;
+}
+
+const GMTToKorTime = (t) => {
+    return t + 32400;
+}
+
+const TimeAsString = (t) => {
+    var date = new Date(t * 1000);
+
+    var year = date.getUTCFullYear();
+    var month = date.getUTCMonth() + 1;
+    var day = date.getUTCDate();
+
+    // Hours part from the timestamp
+    var hours = date.getUTCHours();
+    // Minutes part from the timestamp
+    var minutes = "0" + date.getUTCMinutes();
+    // Seconds part from the timestamp
+    var seconds = "0" + date.getUTCSeconds();
+
+    // Will display time in 10:30:23 format
+    return year + "/" + month + "/" + day + " " + hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+}
+
 class EventPage extends React.Component {
     constructor(props) {
         super(props);
@@ -240,7 +266,7 @@ class EventPage extends React.Component {
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.props.event_data.event_time}
+                                        {TimeAsString(GMTToKorTime(this.props.event_data.event_time))}
                                     </Text>
                                 </Text>
                             </View>
@@ -251,7 +277,7 @@ class EventPage extends React.Component {
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.props.event_data.posting_time} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {TimeAsString(GMTToKorTime(this.props.event_data.posting_time))}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -325,7 +351,7 @@ class EventPage extends React.Component {
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.props.event_data.event_time}
+                                        {TimeAsString(GMTToKorTime(this.props.event_data.event_time))}
                                     </Text>
                                 </Text>
                             </View>
@@ -336,7 +362,7 @@ class EventPage extends React.Component {
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.props.event_data.posting_time} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {TimeAsString(GMTToKorTime(this.props.event_data.posting_time))}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -412,7 +438,7 @@ class EventPage extends React.Component {
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.props.event_data.event_time}
+                                        {TimeAsString(GMTToKorTime(this.props.event_data.event_time))}
                                     </Text>
                                 </Text>
                             </View>
@@ -423,7 +449,7 @@ class EventPage extends React.Component {
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.props.event_data.posting_time} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {TimeAsString(GMTToKorTime(this.props.event_data.posting_time))}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -497,7 +523,7 @@ class EventPage extends React.Component {
                                 </Text>
                                 <Text style={pageStyles.title}>
                                     DATE & TIME: <Text style={pageStyles.context}>
-                                        {this.props.event_data.event_time}
+                                        {TimeAsString(GMTToKorTime(this.props.event_data.event_time))}
                                     </Text>
                                 </Text>
                             </View>
@@ -508,7 +534,7 @@ class EventPage extends React.Component {
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
                                 <Text style={{ fontSize: 12, fontWeight: "300" }}>
-                                    Posted on: {this.props.event_data.posting_time} {/*2022/11/16 12:01:31*/}
+                                    Posted on: {TimeAsString(GMTToKorTime(this.props.event_data.posting_time))}
                                 </Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
